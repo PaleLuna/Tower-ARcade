@@ -8,12 +8,13 @@ public class ItemPlaceble : MonoBehaviour
 {
     [SerializeField]
     private GameObject _prefab;
+    [SerializeField] private GameObject _marker;
 
     [SerializeField]
     private ARRaycastManager _raycastManager;
 
     private List<ARRaycastHit> _raycastHits = new();
-    private GameObject _spawnedObject;
+    private GameObject _spawnedObject = null;
 
     private void OnValidate()
     {
