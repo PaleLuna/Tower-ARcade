@@ -1,0 +1,9 @@
+# ninja log v5
+3	1698	7302221477565171	GameActivity/CMakeFiles/game.dir/UGAEntry.cpp.o	80d618b1b32d5a14
+14	1755	7302221478129346	GameActivity/CMakeFiles/game.dir/UGAInputKeyEvent.cpp.o	1c61cc94cc77b327
+8	1835	7302221478982348	GameActivity/CMakeFiles/game.dir/UGAInputMotionEvent.cpp.o	d1d479e209a2e7e5
+0	1951	7302221480238662	GameActivity/CMakeFiles/game.dir/UGADebug.cpp.o	8a80dee26d1cc6f4
+11	2214	7302221482913666	GameActivity/CMakeFiles/game.dir/UGAInput.cpp.o	220e6f29e1fb098c
+6	2286	7302221483588154	GameActivity/CMakeFiles/game.dir/UGAApplication.cpp.o	9fcfc00e1b5f6faa
+1700	2690	7302221487665620	GameActivity/CMakeFiles/game.dir/UGASoftKeyboard.cpp.o	33fab8e6e1892947
+2691	2792	7302221488381336	C:/Users/PaleLuna/Documents/GitHub/Empire-s-fall/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/2055521b/obj/arm64-v8a/libgame.so	6c87800f9da081d6
