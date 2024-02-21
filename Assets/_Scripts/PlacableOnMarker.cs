@@ -52,6 +52,5 @@ public class PlacableOnMarker : MonoBehaviour
             _spawnedObject = Instantiate(_prefab, hitPose.position, hitPose.rotation);
 
         _spawnedObject.transform.position = hitPose.position;
-        _spawnedObject.transform.rotation = hitPose.rotation;
     }
 }
