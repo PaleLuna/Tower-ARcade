@@ -1,30 +1,22 @@
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
 
-[RequireComponent(typeof(ARRaycastManager))]
 public class PlacableOnMarker : MonoBehaviour
 {
-    [SerializeField]
-    private GameObject _prefab;
     [SerializeField] 
     private GameObject _markerPrefab;
 
     [SerializeField]
-    private ARRaycastManager _raycastManager;
+    private Transform _camTransform;
 
-    private List<ARRaycastHit> _raycastHits = new();
+    [SerializeField]
+    private ScreenTouchDetector _touchDetector;
 
-    private GameObject _spawnedObject = null;
     private GameObject _marker;
 
-    private Vector2 _rayStart;
 
-    private void OnValidate()
-    {
-        _raycastManager ??= GetComponent<ARRaycastManager>();
-    }
+    private Vector2 _rayStart;
+    private Pose _currentPoseHit;
 
     private void Start()
     {
@@ -36,21 +28,34 @@ public class PlacableOnMarker : MonoBehaviour
 
     private void Update()
     {
-        if (!_raycastManager.Raycast(_rayStart, _raycastHits, TrackableType.Planes))
+        if (!_touchDetector.TryGetPlane(_rayStart, out _currentPoseHit))
         {
             _marker.SetActive(false);
             return;
         }
-        var hitPose = _raycastHits[0].pose;
 
         _marker.SetActive(true);
-        _marker.transform.position = hitPose.position;
+        _marker.transform.position = _currentPoseHit.position;
 
         if (Input.touchCount == 0) return;
+    }
 
-        if (!_spawnedObject)
-            _spawnedObject = Instantiate(_prefab, hitPose.position, hitPose.rotation);
+    public bool TryPlaceObjectOnMarker(Transform objTransform)
+    {
+        print($"Marker: {_marker.activeSelf}");
+        if (!_marker.activeSelf) return false;
 
-        _spawnedObject.transform.position = hitPose.position;
+        objTransform.position = _marker.transform.position;
+        RotateToCamera(objTransform);
+
+        return true;
+    }
+
+
+    private void RotateToCamera(Transform objTransform)
+    {
+        Vector3 direction = _camTransform.position - objTransform.position;
+        Quaternion rotation = Quaternion.LookRotation(direction);
+        objTransform.transform.rotation = Quaternion.AngleAxis(rotation.eulerAngles.y, Vector3.up);
     }
 }
