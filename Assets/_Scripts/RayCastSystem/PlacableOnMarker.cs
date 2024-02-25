@@ -10,7 +10,7 @@ public class PlacableOnMarker : MonoBehaviour
     private Transform _camTransform;
 
     [SerializeField]
-    private ScreenTouchDetector _touchDetector;
+    private RayScanner _touchDetector;
 
     private GameObject _marker;
 

@@ -12,12 +12,11 @@ public class ObjectController : MonoBehaviour
     [SerializeField]
     private PlacableOnMarker _placableOnMarker;
     [SerializeField]
-    private ScreenTouchDetector _screenTouchDetector;
+    private RayScanner _screenTouchDetector;
 
     private DictinoryHolder<int, Pony> _ponyHolder = new();
 
     private Pony _currentSelectedPony;
-    private int _currentPonyId = 0;
 
     private void Awake()
     {
@@ -25,42 +24,15 @@ public class ObjectController : MonoBehaviour
 
         UIEvents.objectChangeEvent.AddListener(OnIdChange);
         UIEvents.objectDeleteEvent.AddListener(OnPonyDelete);
-    }
 
-    private void Update()
-    {
-        if (!_screenTouchDetector.IsScreenTouch()) return;
-        print("Touch!");
-        Pony pony = _screenTouchDetector.TryGetComponentFromGO<Pony>();
-        if (pony)
-        {
-            _currentSelectedPony = pony;
-            _currentPonyId = pony.id;
-            UIEvents.objectSelectEvent.Invoke();
-
-            print("Pony");
-        }
-        else if (_placableOnMarker.TryPlaceObjectOnMarker(_ponyHolder[_currentPonyId].transform))
-        {
-            print("Replace");
-
-            print(!_ponyHolder[_currentPonyId].gameObject.activeSelf);
-
-            if (!_ponyHolder[_currentPonyId].gameObject.activeSelf)
-                _ponyHolder[_currentPonyId].gameObject.SetActive(true);
-
-            _currentSelectedPony = _ponyHolder[_currentPonyId];
-        }
-        else
-        {
-            print("Nothing!");
-            UIEvents.objectDeselectEvent.Invoke();
-        }
+        _screenTouchDetector.SubscribeOnGODetect(OnGODetect);
+        _screenTouchDetector.SubscribeOnNothingDetect(ReplacePony);
+        _screenTouchDetector.SubscribeOnPlaneDetect(ReplacePony);
     }
 
     private void InitPonies()
     {
-        for(int i = 0; i < _ponyPrefabs.Count; i++)
+        for (int i = 0; i < _ponyPrefabs.Count; i++)
         {
             Pony pony = Instantiate(_ponyPrefabs[i]);
             _ponyHolder.Registration(pony.id, pony);
@@ -69,16 +41,52 @@ public class ObjectController : MonoBehaviour
 
         _ponyPrefabs = null;
 
-        print(_ponyHolder[0].ponyName);
+        _currentSelectedPony = _ponyHolder[0];
     }
+
+    private void OnGODetect(GameObject gameObject)
+    {
+        Pony tempPony = gameObject.GetComponent<Pony>();
+        if (tempPony)
+            OnPonySelect(tempPony);
+
+    }
+    private void ReplacePony()
+    {
+        print("Replace");
+
+        if (!_currentSelectedPony) return;
+
+        if (!_placableOnMarker.TryPlaceObjectOnMarker(_currentSelectedPony.transform))
+        {
+            OnDeselectPony();
+            return;
+        }
+
+        if (!_currentSelectedPony.gameObject.activeSelf)
+            _currentSelectedPony.gameObject.SetActive(true);
+    }
+
+    private void OnPonySelect(Pony pony)
+    {
+        _currentSelectedPony = pony;
+        UIEvents.objectSelectEvent.Invoke();
+
+        print("Pony");
+    }
+    private void OnDeselectPony()
+    {
+        _currentSelectedPony = null;
+        UIEvents.objectDeselectEvent.Invoke();
+    }
+
     private void OnIdChange(int id)
     {
-        _currentPonyId = id;
-        print($"Current pony: {_ponyHolder[_currentPonyId].ponyName}");
+        OnPonySelect(_ponyHolder[id]);
     }
     private void OnPonyDelete()
     {
         _currentSelectedPony?.gameObject.SetActive(false);
-        UIEvents.objectDeselectEvent.Invoke();
+        OnDeselectPony();
     }
 }

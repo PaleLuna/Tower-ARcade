@@ -1,18 +1,23 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class InputSystem : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    private IInput _inputHandler = new MobileInput();
+
+    private void Update()
     {
-        
+        CheckTap();
+        CheckDoubleTap();
+    }
+    private void CheckTap()
+    {
+        if (_inputHandler.TryTap(out Vector2 pos))
+            InputEvents.tapEvent.Invoke(pos);
     }
 
-    // Update is called once per frame
-    void Update()
+    private void CheckDoubleTap()
     {
-        
+        if (_inputHandler.TryDoubleTap(out Vector2 pos))
+            InputEvents.doubleTapEvent.Invoke(pos);
     }
 }

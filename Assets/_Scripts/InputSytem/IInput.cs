@@ -2,6 +2,6 @@ using UnityEngine;
 
 public interface IInput
 {
-    public bool TryTap(Vector2 tapPosition);
-    public bool TryDoubleTap(Vector2 firstTapPosition);
+    public bool TryTap(out Vector2 tapPosition);
+    public bool TryDoubleTap(out Vector2 lastTapPosition);
 }
