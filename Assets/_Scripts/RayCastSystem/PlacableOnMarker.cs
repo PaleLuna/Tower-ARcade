@@ -1,7 +1,10 @@
+using PaleLuna.Architecture.Controllers;
+using PaleLuna.Architecture.GameComponent;
+using Services;
 using UnityEngine;
 using UnityEngine.XR.ARSubsystems;
 
-public class PlacableOnMarker : MonoBehaviour
+public class PlacableOnMarker : MonoBehaviour, IStartable, IUpdatable
 {
     [SerializeField] 
     private GameObject _markerPrefab;
@@ -18,16 +21,25 @@ public class PlacableOnMarker : MonoBehaviour
     private Vector2 _rayStart;
     private Pose _currentPoseHit;
 
-    private void Start()
+    private bool _isStart = false;
+    public bool IsStarted => _isStart;
+
+    public void OnStart()
     {
         _rayStart = new Vector2(Screen.width / 2, Screen.height / 2);
 
         _marker = Instantiate(_markerPrefab);
         _marker.SetActive(false);
+
+        _isStart = true;
+
+        ServiceManager.Instance.GlobalServices.Get<GameController>().Registatrion(this);
     }
 
-    private void Update()
+    public void EveryFrameRun()
     {
+        print("Update");
+
         if (!_touchDetector.TryGetPlane(_rayStart, out _currentPoseHit))
         {
             _marker.SetActive(false);
