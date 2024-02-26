@@ -2,27 +2,37 @@ using PaleLuna.Architecture.Controllers;
 using PaleLuna.Architecture.GameComponent;
 using Services;
 using UnityEngine;
-using UnityEngine.XR.ARSubsystems;
 
 public class PlacableOnMarker : MonoBehaviour, IStartable, IUpdatable
 {
-    [SerializeField] 
+    #region [ Properties ]
+
+    #region [ Serializable ]
+    [Header("GameObjects")]
+    [SerializeField]
     private GameObject _markerPrefab;
 
+    [Header("Components")]
     [SerializeField]
     private Transform _camTransform;
 
     [SerializeField]
     private RayScanner _touchDetector;
+    #endregion
 
-    private GameObject _marker;
+    #region [ Flags ]
+    private bool _isStart = false;
+    public bool IsStarted => _isStart;
+    #endregion
 
-
+    #region [ Other ]
     private Vector2 _rayStart;
     private Pose _currentPoseHit;
 
-    private bool _isStart = false;
-    public bool IsStarted => _isStart;
+    private GameObject _marker;
+    #endregion
+
+    #endregion
 
     public void OnStart()
     {
@@ -38,24 +48,17 @@ public class PlacableOnMarker : MonoBehaviour, IStartable, IUpdatable
 
     public void EveryFrameRun()
     {
-        print("Update");
-
-        if (!_touchDetector.TryGetPlane(_rayStart, out _currentPoseHit))
-        {
+        if (_touchDetector.TryGetPlane(_rayStart, out _currentPoseHit))
+            ReplaceMarker();
+        else
             _marker.SetActive(false);
-            return;
-        }
-
-        _marker.SetActive(true);
-        _marker.transform.position = _currentPoseHit.position;
-
-        if (Input.touchCount == 0) return;
     }
 
     public bool TryPlaceObjectOnMarker(Transform objTransform)
     {
         print($"Marker: {_marker.activeSelf}");
-        if (!_marker.activeSelf) return false;
+        if (!_marker.activeSelf)
+            return false;
 
         objTransform.position = _marker.transform.position;
         RotateToCamera(objTransform);
@@ -63,6 +66,7 @@ public class PlacableOnMarker : MonoBehaviour, IStartable, IUpdatable
         return true;
     }
 
+    #region [ Private Methods ]
 
     private void RotateToCamera(Transform objTransform)
     {
@@ -70,4 +74,12 @@ public class PlacableOnMarker : MonoBehaviour, IStartable, IUpdatable
         Quaternion rotation = Quaternion.LookRotation(direction);
         objTransform.transform.rotation = Quaternion.AngleAxis(rotation.eulerAngles.y, Vector3.up);
     }
+
+    private void ReplaceMarker()
+    {
+        _marker.SetActive(true);
+        _marker.transform.position = _currentPoseHit.position;
+    }
+
+    #endregion
 }
