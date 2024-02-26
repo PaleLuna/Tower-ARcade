@@ -1,14 +1,26 @@
+using PaleLuna.Architecture.Controllers;
+using PaleLuna.Architecture.GameComponent;
+using PaleLuna.Architecture.Services;
+using Services;
 using UnityEngine;
 
-public class InputSystem : MonoBehaviour
+public class InputSystem : IUpdatable, IService
 {
     private IInput _inputHandler = new MobileInput();
 
-    private void Update()
+    public InputSystem() 
+    {
+        ServiceLocator globalService = ServiceManager.Instance.GlobalServices;
+
+        globalService.Get<GameController>().Registatrion(this);
+    }
+
+    public void EveryFrameRun()
     {
         CheckTap();
         CheckDoubleTap();
     }
+
     private void CheckTap()
     {
         if (_inputHandler.TryTap(out Vector2 pos))
@@ -20,4 +32,6 @@ public class InputSystem : MonoBehaviour
         if (_inputHandler.TryDoubleTap(out Vector2 pos))
             InputEvents.doubleTapEvent.Invoke(pos);
     }
+
+    
 }

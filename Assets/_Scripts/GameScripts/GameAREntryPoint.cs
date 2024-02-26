@@ -1,15 +1,19 @@
 using Cysharp.Threading.Tasks;
 using PaleLuna.Architecture.EntryPoint;
+using Services;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameAREntryPoint : EntryPoint
+public class GameAREntryPoint : SceneEntryPoint
 {
-    protected override UniTask Setup()
+    protected override async UniTask Setup()
     {
-        return base.Setup();
+        await base.Setup();
+    }
 
-
+    protected override void FillSceneLocator()
+    {
+        _sceneServiceLocator.Registarion(new InputSystem());
     }
 }
