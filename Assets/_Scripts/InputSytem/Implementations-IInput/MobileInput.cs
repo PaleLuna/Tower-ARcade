@@ -22,9 +22,11 @@ public class MobileInput : IInput
     public bool TryTap(out Vector2 tapPosition)
     {
         tapPosition = default;
-        if (Input.touchCount == 0) return false;
+        bool flag = Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began;
 
-        tapPosition = Input.GetTouch(0).position;
-        return true;
+        if (flag)
+            tapPosition = Input.GetTouch(0).position;
+
+        return flag;
     }
 }
