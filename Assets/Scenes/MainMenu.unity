@@ -536,7 +536,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 305039341}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1467761804}
+        m_TargetAssemblyTypeName: MainPanelBtnScripts, Assembly-CSharp
+        m_MethodName: LoadCurrentLevel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &305039341
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -720,6 +732,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 345850809}
+  - component: {fileID: 345850810}
   m_Layer: 0
   m_Name: --------MAIN--------
   m_TagString: Untagged
@@ -743,6 +756,20 @@ Transform:
   - {fileID: 1003102329}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &345850810
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 345850808}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: effbf3aaa3d867949bc3743ec9641d67, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _initializersMono: []
+  _startablesMono: []
 --- !u!1 &602145985
 GameObject:
   m_ObjectHideFlags: 0
@@ -1219,6 +1246,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1467761803}
+  - component: {fileID: 1467761804}
   m_Layer: 0
   m_Name: ----------UI----------
   m_TagString: Untagged
@@ -1243,6 +1271,18 @@ Transform:
   - {fileID: 1830019362}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1467761804
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1467761802}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0cfad3dc85a9624c84008e2fad7c4df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1830019359
 GameObject:
   m_ObjectHideFlags: 0
@@ -1393,7 +1433,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2100706745}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1467761804}
+        m_TargetAssemblyTypeName: MainPanelBtnScripts, Assembly-CSharp
+        m_MethodName: Quit
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2100706745
 MonoBehaviour:
   m_ObjectHideFlags: 0
