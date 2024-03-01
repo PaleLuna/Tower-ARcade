@@ -479,7 +479,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 1073742071
+    m_Bits: 1073741943
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -1599,7 +1599,8 @@ GameObject:
   m_Component:
   - component: {fileID: 695517296}
   - component: {fileID: 695517299}
-  - component: {fileID: 695517300}
+  - component: {fileID: 695517298}
+  - component: {fileID: 695517297}
   m_Layer: 0
   m_Name: -----------MAIN-----------
   m_TagString: Untagged
@@ -1626,6 +1627,43 @@ Transform:
   - {fileID: 1429265045}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &695517297
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 695517295}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c923d4593d44a444afa95fed66773ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _ponyPrefabs:
+  - {fileID: 7555513663975263319, guid: 808b61ec29a943244833138c83e1bc2a, type: 3}
+  - {fileID: 8441698382242316416, guid: 0db26a99f7119df43914b88e49a94c4c, type: 3}
+  - {fileID: 8758772881845650188, guid: c500dab9ea0c98943a6cc12560fe9c4d, type: 3}
+  - {fileID: 2620936319372959817, guid: 63359f1c261ea06449efb7b326687a83, type: 3}
+  - {fileID: 7328664017291273508, guid: 0c8504e68210464408d3b506598c114e, type: 3}
+  - {fileID: 2956885455020323418, guid: 0d517e48bc27908498f1b6058b330c9d, type: 3}
+  _placableOnMarker: {fileID: 695517298}
+  _screenTouchDetector: {fileID: 2015178448}
+--- !u!114 &695517298
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 695517295}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6de5ba8546b829c47949a450424333d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _markerPrefab: {fileID: 7159196040625159737, guid: 9a9d7cd3611b1c747a0b66a8c2d56698,
+    type: 3}
+  _camTransform: {fileID: 226069655}
+  _touchDetector: {fileID: 2015178448}
 --- !u!114 &695517299
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1640,21 +1678,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _initializersMono: []
   _startablesMono: []
---- !u!114 &695517300
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 695517295}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 668003d3675aba24fb68b7b39bc6b96c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _levelPrefab: {fileID: 5977372007357679176, guid: a0e429d8e6adc85468b0eaa8d3665c48,
-    type: 3}
-  _screenTouchDetector: {fileID: 2015178448}
 --- !u!1 &784422222
 GameObject:
   m_ObjectHideFlags: 0
@@ -1673,7 +1696,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &784422223
 RectTransform:
   m_ObjectHideFlags: 0
