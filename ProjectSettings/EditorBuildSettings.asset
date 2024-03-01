@@ -13,7 +13,7 @@ EditorBuildSettings:
     guid: eeaa15868bf3efb4ba21644a0d7a015d
   - enabled: 1
     path: Assets/Scenes/GameAR.unity
-    guid: ff304179e258b3049aa9577ed226c4ee
+    guid: b86f8ca52844473499d970c0368250c1
   m_configObjects:
     Unity.XR.WindowsMR.Settings: {fileID: 11400000, guid: 744b813df90924c169af73489b8325de,
       type: 2}
