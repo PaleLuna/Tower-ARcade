@@ -33,7 +33,7 @@ public class RayScanner : MonoBehaviour
     #region [ Events public methods ]
     public void SubscribeOnGODetect(UnityAction<GameObject> action) =>
         _rayCastEvents.SubscribeGODetect(action);
-    public void SubscribeOnPlaneDetect(UnityAction action) =>
+    public void SubscribeOnPlaneDetect(UnityAction<Vector3> action) =>
         _rayCastEvents.SubscribePlaneDetect(action);
     public void SubscribeOnUIDetect(UnityAction action) =>
         _rayCastEvents.SubscribeUIDetect(action);
@@ -42,7 +42,7 @@ public class RayScanner : MonoBehaviour
 
     public void UnsubscribeOnGODetect(UnityAction<GameObject> action) =>
         _rayCastEvents.UnsubscribeGODetect(action);
-    public void UnsubscribeOnPlaneDetect(UnityAction action) =>
+    public void UnsubscribeOnPlaneDetect(UnityAction<Vector3> action) =>
         _rayCastEvents.UnsubscribePlaneDetect(action);
     public void UnsubscribeOnUIDetect(UnityAction action) =>
         _rayCastEvents.UnsubscribeUIDetect(action);
@@ -55,13 +55,13 @@ public class RayScanner : MonoBehaviour
         print("Tap!");
         if (IsUI(startPos)) _rayCastEvents.OnUIDetect();
         else if (IsGameObject(startPos, out GameObject gObj)) _rayCastEvents.OnGODetect(gObj);
-        else if (IsPlane(startPos)) _rayCastEvents.OnPlaneDetect();
+        else if (IsPlane(startPos, out Vector3 point)) _rayCastEvents.OnPlaneDetect(point);
         else _rayCastEvents.OnNothingDetect();
     }
 
-    private bool IsPlane(Vector2 startPos)
+    private bool IsPlane(Vector2 startPos, out Vector3 point)
     {
-        bool flag = TryGetPlane(startPos);
+        bool flag = TryGetPlaneTouch(startPos, out point);
 
         print($"is Plane: {flag}");
 
@@ -91,12 +91,13 @@ public class RayScanner : MonoBehaviour
         return flag;
     }
 
-    public bool TryGetPlaneTouch(Vector2 touchPos)
+    public bool TryGetPlaneTouch(Vector2 touchPos, out Vector3 point)
     {
+        point = default;
         if (!TryGetPlane(touchPos))
             return false;
 
-        touchPos = _raycastHits[0].pose.position;
+        point = _raycastHits[0].pose.position;
         return true;
     }
 

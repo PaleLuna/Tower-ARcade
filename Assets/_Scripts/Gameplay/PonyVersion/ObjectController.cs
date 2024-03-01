@@ -66,6 +66,21 @@ public class ObjectController : MonoBehaviour
         if (!_currentSelectedPony.gameObject.activeSelf)
             _currentSelectedPony.gameObject.SetActive(true);
     }
+    private void ReplacePony(Vector3 point)
+    {
+        print("Replace");
+
+        if (!_currentSelectedPony) return;
+
+        if (!_placableOnMarker.TryPlaceObjectOnMarker(_currentSelectedPony.transform))
+        {
+            OnDeselectPony();
+            return;
+        }
+
+        if (!_currentSelectedPony.gameObject.activeSelf)
+            _currentSelectedPony.gameObject.SetActive(true);
+    }
 
     private void OnPonySelect(Pony pony)
     {
