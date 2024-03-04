@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class MainPanelBtnScripts : MonoBehaviour
 {
-    public void LoadCurrentLevel()
+    public void LoadCurrentLevel(int sceneIndex)
     {
         SceneLoaderService sceneManager =
             ServiceManager.Instance.GlobalServices.Get<SceneLoaderService>();
 
-        sceneManager.LoadScene(2);
+        sceneManager.LoadScene(sceneIndex);
     }
 
     public void Quit()
