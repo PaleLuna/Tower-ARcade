@@ -165,7 +165,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _initializersMono: []
   _startablesMono: []
-  _nextScene: 2
+  _nextScene: 1
 --- !u!1 &109372990
 GameObject:
   m_ObjectHideFlags: 0
