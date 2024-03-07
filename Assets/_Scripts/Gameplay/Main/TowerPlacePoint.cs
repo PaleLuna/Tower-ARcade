@@ -1,13 +1,21 @@
 using UnityEngine;
 
-public class TowerPlacePoint : MonoBehaviour
+public class TowerPlacePoint : MonoBehaviour, IInteractable
 {
-    private bool _isFree = true;
+    [SerializeField] Transform _towerPrefab;
 
-    public bool isFree => _isFree;
+    private Transform _tower = null;
 
-    public void TakeThisPlace()
+    public bool isFree => _tower != null;
+
+    public void Interact()
     {
-        _isFree = false;
+        TakeThisPlace(); 
+    }
+
+    private void TakeThisPlace()
+    {
+        if(!isFree)
+            _tower = Instantiate(_towerPrefab, transform.position, Quaternion.identity);
     }
 }

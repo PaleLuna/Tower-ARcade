@@ -33,8 +33,11 @@ public class InputHandler : MonoBehaviour, IStartable
 
     private void OnTapReaction(GameObject gObj)
     {
-        print("ObjTap");
-        if (gObj.GetComponent<TowerPlacePoint>())
-            print("TowerPosition");
+        IInteractable interactable = gObj.GetComponent<IInteractable>();
+        print($"ObjTap {interactable}");
+        interactable?.Interact();
+        
+        
+            
     }
 }

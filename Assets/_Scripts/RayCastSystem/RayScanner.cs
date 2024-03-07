@@ -73,7 +73,7 @@ public class RayScanner : MonoBehaviour
         gObj = null;
 
         Ray ray = _mainCam.ScreenPointToRay(startPos);
-        bool isGObj = Physics.Raycast(ray, out RaycastHit hit);
+        bool isGObj = Physics.Raycast(ray, out RaycastHit hit, _layerMask);
 
         if (isGObj)
             gObj = hit.collider.gameObject;
