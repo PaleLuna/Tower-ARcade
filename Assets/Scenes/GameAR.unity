@@ -479,7 +479,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 481
+    m_Bits: 2017
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -4273,7 +4273,7 @@ MonoBehaviour:
   _raycastManager: {fileID: 2015178441}
   _layerMask:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 128
 --- !u!1 &2028140904
 GameObject:
   m_ObjectHideFlags: 0
