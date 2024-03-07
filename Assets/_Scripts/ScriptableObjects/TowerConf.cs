@@ -1,9 +1,10 @@
 using UnityEngine;
 
+[CreateAssetMenu(fileName = "TowerConf", menuName = "Configs/Tower")]
 public class TowerConf : ScriptableObject
 {
     [Header("Combat zone radius")]
-    [SerializeField, Range(0, 1)]
+    [SerializeField, Range(0, 10)]
     private float _combatRadius;
 
     [Header("Combat characteristics")]
