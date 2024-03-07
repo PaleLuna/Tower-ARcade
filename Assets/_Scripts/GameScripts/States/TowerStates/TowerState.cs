@@ -3,10 +3,10 @@ using UnityEngine;
 
 public abstract class TowerState : State
 {
-    protected Tower _context;
+    protected Tower m_context;
 
     public TowerState(Tower context)
     {
-        this._context = context;
+        this.m_context = context;
     }
 }
