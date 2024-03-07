@@ -6,7 +6,9 @@ using UnityEngine;
 public class TowerCombatState : TowerState, IUpdatable
 {
     private GameController _gameController;
-    public TowerCombatState(Tower context) : base(context)
+
+    public TowerCombatState(Tower context)
+        : base(context)
     {
         _gameController = ServiceManager.Instance.GlobalServices.Get<GameController>();
     }
@@ -14,14 +16,25 @@ public class TowerCombatState : TowerState, IUpdatable
     public override void StateStart()
     {
         _gameController.updatablesHolder.Registration(this);
+        m_context.combatZone.SubscribeOnLastExit(OnNoEnemy);
     }
+
     public void EveryFrameRun()
     {
-        Debug.Log("In Combat Mode!");
+        Enemy currentEnemy = m_context.combatZone.GetEnemy();
+
+        m_context.Fire(currentEnemy.transform);
+        m_context.RotateHead(currentEnemy.transform);
+    }
+
+    private void OnNoEnemy()
+    {
+        m_context.stateHolder.ChangeState<TowerIdleState>();
     }
 
     public override void StateStop()
     {
         _gameController.updatablesHolder.UnRegistration(this);
+        m_context.combatZone.UnsubscribeOnLastExit(OnNoEnemy);
     }
 }
