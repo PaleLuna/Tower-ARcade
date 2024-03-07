@@ -1,18 +1,20 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class TowerConf : MonoBehaviour
+public class TowerConf : ScriptableObject
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [Header("Combat zone radius")]
+    [SerializeField, Range(0, 1)]
+    private float _combatRadius;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    [Header("Combat characteristics")]
+    [SerializeField, Min(0)]
+    private float _damageByHit;
+    [SerializeField, Min(0.01F), Tooltip("amount of shots fired per minute")]
+    private int _shotsPerMinute;
+
+
+    public float combatRadius => _combatRadius;
+    public float damageByHit => _damageByHit;
+
+    public float shotsPerMinute => _shotsPerMinute;
 }
