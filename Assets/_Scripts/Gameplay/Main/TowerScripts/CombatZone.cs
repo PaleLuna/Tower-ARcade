@@ -27,15 +27,23 @@ public class CombatZone : MonoBehaviour
 
     public void Init(TowerConf combatConf)
     {
-        _combatConf = combatConf;
+        UpdateConf(combatConf);
     }
 
     private void OnValidate()
     {
         _sphereCollider ??= GetComponent<SphereCollider>();
+
+        _sphereCollider.isTrigger = true;
     }
 
     public Enemy GetEnemy() => _enemies.At(0);
+
+    private void UpdateConf(TowerConf towerConf)
+    {
+        _combatConf = towerConf;
+        _sphereCollider.radius = _combatConf.combatRadius;
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -54,10 +62,5 @@ public class CombatZone : MonoBehaviour
         if (_enemies.Count == 0) _lastEnemyExit.Invoke();
     }
 
-    private bool TryGetEnemy(Collider collider, out Enemy enemy)
-    {
-        enemy = collider.GetComponent<Enemy>();
-
-        return enemy != null;
-    }
+    private bool TryGetEnemy(Collider collider, out Enemy enemy) => enemy = collider.GetComponent<Enemy>();
 }
