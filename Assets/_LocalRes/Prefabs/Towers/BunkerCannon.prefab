@@ -296,6 +296,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bcc3b6b75a6eac4c9c270a8582de71d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _shellPrefab: {fileID: 3101322102986909511, guid: ed89f0ac60ff9f44abd48c47f5d3b3e7,
+    type: 3}
 --- !u!1 &7028542519593503783
 GameObject:
   m_ObjectHideFlags: 0
@@ -349,7 +351,6 @@ MonoBehaviour:
   _ammunitionHolder: {fileID: 4475992505483709615}
   _towerHead: {fileID: 1878894855814777376}
   _muzzel: {fileID: 6706404753678480268}
-  _throwForce: 0.05
 --- !u!1 &7250177078063802979
 GameObject:
   m_ObjectHideFlags: 0
@@ -1139,7 +1140,7 @@ PrefabInstance:
     - target: {fileID: 4441001778933889930, guid: ed89f0ac60ff9f44abd48c47f5d3b3e7,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6349312887871366442, guid: ed89f0ac60ff9f44abd48c47f5d3b3e7,
         type: 3}
