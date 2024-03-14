@@ -12,7 +12,6 @@ public class Shell : MonoBehaviour
 
     private AmmunitionHolder _ammunitionHolder;
 
-    private Coroutine _timer;
 
     private float _damage;
 
@@ -30,21 +29,21 @@ public class Shell : MonoBehaviour
     public void SetParentAmmunition(AmmunitionHolder ammunitionHolder) =>
         _ammunitionHolder = ammunitionHolder;
 
-    public void ThrowThis(Vector3 force, float damage)
+    public void ThrowThis(Vector3 diretction, float initSpeed, float damage)
     {
         if (gameObject.activeSelf) return;
 
+        float force = _rigidbody.mass * initSpeed;
+
         gameObject.SetActive(true);
 
-        _rigidbody.AddForce(force, ForceMode.Impulse);
+        _rigidbody.AddForce(diretction * force, ForceMode.Impulse);
         _damage = damage;
-
-        _timer = StartCoroutine(Timer());
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.TryGetComponent<IDamagable>(out IDamagable damagable))
+        if (other.TryGetComponent(out IDamagable damagable))
             damagable.SetDamage(_damage);
 
         Deactivate();
@@ -54,6 +53,8 @@ public class Shell : MonoBehaviour
     {
         _ammunitionHolder.ReturnToCombat(this);
 
+        _rigidbody.velocity = Vector3.zero;
+
         gameObject.SetActive(false);
     }
 
@@ -62,6 +63,5 @@ public class Shell : MonoBehaviour
         yield return new WaitForSeconds(15);
 
         Deactivate();
-        _timer = null;
     }
 }

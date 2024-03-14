@@ -12,10 +12,13 @@ public class TowerConf : ScriptableObject
     private float _damageByHit;
     [SerializeField, Min(0.01F), Tooltip("amount of shots fired per minute")]
     private int _shotsPerMinute;
+    [SerializeField]
+    private float _initialSpeed;
 
 
     public float combatRadius => _combatRadius;
     public float damageByHit => _damageByHit;
 
     public float shotsPerMinute => _shotsPerMinute;
+    public float initialSpeed => _initialSpeed;
 }

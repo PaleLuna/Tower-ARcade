@@ -13,7 +13,6 @@ public class Tower : MonoBehaviour
     [SerializeField] private Transform _muzzel;
 
     [Header("Properties")]
-    [SerializeField] private float _throwForce = 100F;
 
     private TowerStateHolder _stateHolder;
 
@@ -40,7 +39,7 @@ public class Tower : MonoBehaviour
         Vector3 direction = enemyTransform.position - transform.TransformDirection(_muzzel.transform.position);
         shell.transform.position = _muzzel.position;
 
-        shell.ThrowThis(direction * _throwForce, _towerConf.damageByHit);
+        shell.ThrowThis(direction, towerConf.initialSpeed, _towerConf.damageByHit);
 
         StartCoroutine(CoolDown());
     }
