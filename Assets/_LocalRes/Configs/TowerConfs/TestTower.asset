@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _combatRadius: 3
   _damageByHit: 30
-  _shotsPerMinute: 5
+  _shotsPerMinute: 30
