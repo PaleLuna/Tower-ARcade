@@ -23,11 +23,11 @@ public class Tower : MonoBehaviour
     public TowerStateHolder stateHolder => _stateHolder;
     public Transform towerHead => _towerHead;
 
-    private void Start()
+    private void Awake()
     {
         _stateHolder = new(this);
 
-        _combatZone.Init(_towerConf);
+        _combatZone.UpdateConf(_towerConf);
     }
 
     virtual public void Fire(Transform enemyTransform) //In the future it will be used for shooting

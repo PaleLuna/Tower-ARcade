@@ -25,11 +25,6 @@ public class CombatZone : MonoBehaviour
     #endregion
     #endregion
 
-    public void Init(TowerConf combatConf)
-    {
-        UpdateConf(combatConf);
-    }
-
     private void OnValidate()
     {
         _sphereCollider ??= GetComponent<SphereCollider>();
@@ -39,7 +34,7 @@ public class CombatZone : MonoBehaviour
 
     public Enemy GetEnemy() => _enemies.At(0);
 
-    private void UpdateConf(TowerConf towerConf)
+    public void UpdateConf(TowerConf towerConf)
     {
         _combatConf = towerConf;
         _sphereCollider.radius = _combatConf.combatRadius;
