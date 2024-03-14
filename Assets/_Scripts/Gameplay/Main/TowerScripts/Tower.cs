@@ -37,7 +37,7 @@ public class Tower : MonoBehaviour
 
         Shell shell = _ammunitionHolder.GetShell();
 
-        Vector3 direction = enemyTransform.position - _muzzel.transform.position;
+        Vector3 direction = enemyTransform.position - transform.TransformDirection(_muzzel.transform.position);
         shell.transform.position = _muzzel.position;
 
         shell.ThrowThis(direction * _throwForce, _towerConf.damageByHit);
