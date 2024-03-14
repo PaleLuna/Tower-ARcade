@@ -1,17 +1,18 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Path : MonoBehaviour
+[Serializable]
+public class Path
 {
     [SerializeReference]
     private List<PathPoint> pathPoints = new();
-
-    private void OnValidate()
+    public void Refresh()
     {
         if (pathPoints.Count == 0) return;
 
-        for(int i = 0; i <  pathPoints.Count-1; i++)
-            pathPoints[i].nextPoint = pathPoints[i+1];
+        for (int i = 0; i < pathPoints.Count - 1; i++)
+            pathPoints[i].nextPoint = pathPoints[i + 1];
 
         pathPoints[pathPoints.Count - 1].nextPoint = null;
     }
