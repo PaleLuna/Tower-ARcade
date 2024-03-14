@@ -1,12 +1,10 @@
-using UnityEngine;
-
 public class TowerIdleState : TowerState
 {
-    public TowerIdleState(Tower context) : base(context){}
+    public TowerIdleState(Tower context)
+        : base(context) { }
 
     public override void StateStart()
     {
-        Debug.Log($"New State! {this}");
         m_context.combatZone.SubscribeOnFirstEnter(OnEnemyEnter);
     }
 
