@@ -23,7 +23,7 @@ public class TowerCombatState : TowerState, IUpdatable
         Enemy currentEnemy = m_context.combatZone.GetEnemy();
 
         m_context.RotateHead(currentEnemy.transform);
-        m_context.Fire(currentEnemy.transform);
+        m_context.Fire(currentEnemy);
     }
 
     private void OnNoEnemy()

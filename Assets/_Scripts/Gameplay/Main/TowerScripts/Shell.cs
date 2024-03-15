@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody), typeof(Collider))]
@@ -11,7 +12,6 @@ public class Shell : MonoBehaviour
     private Collider _collider;
 
     private AmmunitionHolder _ammunitionHolder;
-
 
     private float _damage;
 
