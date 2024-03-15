@@ -19,7 +19,7 @@ public class EnemyHolder : MonoBehaviour, IStartable, IService
 
     private Queue<Enemy> _enemiesToRespawn;
 
-    private Transform _startPointTransfrom;
+    private PathPoint _startPoint;
 
     private Coroutine _respawnEnemies;
 
@@ -34,7 +34,7 @@ public class EnemyHolder : MonoBehaviour, IStartable, IService
 
         sceneLocator.Registarion(this);
 
-        _startPointTransfrom = sceneLocator.Get<PathHolder>().GetPath(0).GetFirst().transform;
+        _startPoint = sceneLocator.Get<PathHolder>().GetPath(0).GetFirst();
 
         _enemiesToRespawn = new(_maxEnemiesOnLevel);
 
@@ -58,9 +58,9 @@ public class EnemyHolder : MonoBehaviour, IStartable, IService
     {
         for(int i = 0; i < _maxEnemiesOnLevel; i++)
         {
-            Enemy enemy = Instantiate(_enemyPrefab, transform);
+            Enemy enemy = Instantiate(_enemyPrefab, _startPoint.transform.position, Quaternion.identity, transform);
             enemy.gameObject.name = $"enemy {i}";
-            enemy.Respawn(_startPointTransfrom.position);
+            enemy.Respawn(_startPoint);
 
             yield return new WaitForSeconds(_intervalBetweenSpawns);
         }
@@ -73,7 +73,7 @@ public class EnemyHolder : MonoBehaviour, IStartable, IService
             yield return new WaitForSeconds(_intervalBetweenSpawns);
 
             Enemy enemy = _enemiesToRespawn.Dequeue();
-            enemy.Respawn(_startPointTransfrom.position);
+            enemy.Respawn(_startPoint);
         }
 
         _respawnEnemies = null;

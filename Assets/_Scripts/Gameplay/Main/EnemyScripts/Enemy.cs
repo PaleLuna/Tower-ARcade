@@ -29,10 +29,6 @@ public class Enemy : MonoBehaviour, IDamagable
         _rigidbody ??= GetComponent<Rigidbody>();
     }
 
-    private void OnEnable()
-    {
-        _stateHolder.ChangeState<EnemyStateIdle>();
-    }
     private void OnDisable()
     {
         if(!_stateHolder.currentState.GetType().Equals(typeof(EnemyStateDeath)))
@@ -56,23 +52,14 @@ public class Enemy : MonoBehaviour, IDamagable
             _stateHolder.ChangeState<EnemyStateDeath>();
     }
 
-    public void Respawn(Vector3 position)
+    public void Respawn(PathPoint startPoint)
     {
-        gameObject.SetActive(true);
-        transform.position = position;
-
+        transform.position = startPoint.transform.position;
         _stateHolder.ChangeState<EnemyStateWalk>();
+        PathPointReached(startPoint);
+        gameObject.SetActive(true);
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.TryGetComponent(out PathPoint pathPoint))
-        {
-            if (pathPoint.isFinish)
-                _stateHolder.ChangeState<EnemyStateDeath>();
-            else
-                _pathPointReachedEvent.Invoke(pathPoint);
-
-        }
-    }
+    public void PathPointReached(PathPoint point) => _pathPointReachedEvent.Invoke(point);
+    public void FinishPointReached() => _stateHolder.ChangeState<EnemyStateDeath>();
 }
