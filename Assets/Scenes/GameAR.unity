@@ -2012,7 +2012,7 @@ MonoBehaviour:
   _enemyPrefab: {fileID: 1696911307263585837, guid: 178370ed3872a6b4da6d438799c9a2e7,
     type: 3}
   _maxEnemiesOnLevel: 10
-  _intervalBetweenSpawns: 5
+  _intervalBetweenSpawns: 3
 --- !u!1 &941148009
 GameObject:
   m_ObjectHideFlags: 0
@@ -3417,6 +3417,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2533200935459946254, guid: ec98165da8aacab4099345703050e889,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.33
       objectReference: {fileID: 0}
     - target: {fileID: 4722243733625646237, guid: ec98165da8aacab4099345703050e889,
         type: 3}
