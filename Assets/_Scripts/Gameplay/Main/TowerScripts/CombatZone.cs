@@ -1,4 +1,5 @@
 using PaleLuna.DataHolder;
+using System.Xml.Serialization;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -25,6 +26,15 @@ public class CombatZone : MonoBehaviour
     #endregion
     #endregion
 
+    private void OnEnable()
+    {
+        GameEvents.enemyDeathEvent.AddListener(OnEnemyDead);
+    }
+    private void OnDisable()
+    {
+        GameEvents.enemyDeathEvent.RemoveListener(OnEnemyDead);
+    }
+
     private void OnValidate()
     {
         _sphereCollider ??= GetComponent<SphereCollider>();
@@ -40,11 +50,16 @@ public class CombatZone : MonoBehaviour
         _sphereCollider.radius = _combatConf.combatRadius;
     }
 
+    private void OnEnemyDead(Enemy enemy)
+    {
+        RemoveEnemy(enemy);
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         print("Hit!");
 
-        if (!TryGetEnemy(other, out Enemy enemy)) return;
+        if (!other.TryGetComponent(out Enemy enemy)) return;
 
         _enemies.Registration(enemy);
 
@@ -52,12 +67,15 @@ public class CombatZone : MonoBehaviour
     }
     private void OnTriggerExit(Collider other)
     {
-        if (!TryGetEnemy(other, out Enemy enemy)) return;
+        if (!other.TryGetComponent(out Enemy enemy)) return;
 
+        RemoveEnemy(enemy);
+    }
+
+    private void RemoveEnemy(Enemy enemy)
+    {
         _enemies.Unregistration(enemy);
 
         if (_enemies.Count == 0) _lastEnemyExit.Invoke();
     }
-
-    private bool TryGetEnemy(Collider collider, out Enemy enemy) => enemy = collider.GetComponent<Enemy>();
 }
