@@ -7878,6 +7878,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: PathPoint-Start
       objectReference: {fileID: 0}
+    - target: {fileID: 7583399605676904683, guid: 8fd964d535b83e641be06b98b8cf24d0,
+        type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
