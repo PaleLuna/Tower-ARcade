@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: TestTower
   m_EditorClassIdentifier: 
   _combatRadius: 2.3
-  _damageByHit: 30
-  _shotsPerMinute: 80
+  _damageByHit: 1
+  _shotsPerMinute: 15
   _initialSpeed: 3
