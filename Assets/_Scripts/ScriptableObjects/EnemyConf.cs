@@ -4,6 +4,7 @@ using UnityEngine;
 public class EnemyConf : ScriptableObject
 {
     [Header("Mobility")]
+    [SerializeField]
     private float _speed;
 
     [Header("Health")]
