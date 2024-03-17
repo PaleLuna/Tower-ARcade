@@ -58,6 +58,10 @@
     },
     "dotnet.defaultSolution": "Tower ARcade.sln",
     "cSpell.words": [
-        "Interactable"
+        "Behaviour",
+        "Controll",
+        "Interactable",
+        "Respawn",
+        "Startable"
     ]
 }
