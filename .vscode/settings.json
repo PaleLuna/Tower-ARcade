@@ -56,5 +56,8 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "Tower ARcade.sln"
+    "dotnet.defaultSolution": "Tower ARcade.sln",
+    "cSpell.words": [
+        "Interactable"
+    ]
 }
