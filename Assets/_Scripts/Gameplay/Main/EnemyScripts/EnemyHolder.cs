@@ -30,20 +30,37 @@ public class EnemyHolder : MonoBehaviour, IStartable, IService
     {
         if (_isStart || !enabled) return;
 
-        ServiceLocator sceneLocator = ServiceManager.Instance.SceneLocator;
-
-        sceneLocator.Registarion(this);
-
-        _startPoint = sceneLocator.Get<PathHolder>().GetPath(0).GetFirst();
+        ServiceManager.Instance.SceneLocator.Registarion(this);
 
         _enemiesToRespawn = new(_maxEnemiesOnLevel);
-
-        StartCoroutine(SpawnEnemies());
 
         GameEvents.enemyDeathEvent.AddListener(AddEnemyToQueue);
         GameEvents.enemyFinishReachedEvent.AddListener(AddEnemyToQueue);
 
+        GameEvents.levelPlaceFirstly.AddListener(OnLevelPlaceFirstly);
+        GameEvents.gameRestart.AddListener(OnLevelRestart);
+        GameEvents.levelConfirmEvent.AddListener(OnLevelRestart);
+
         _isStart = true;
+    }
+
+    private void OnLevelPlaceFirstly(){
+        _startPoint = ServiceManager.Instance.SceneLocator.Get<PathHolder>().GetPath(0).GetFirst();
+        StartCoroutine(SpawnEnemies());
+    }
+
+    private void OnLevelRestart(){
+        if(_respawnEnemies != null)
+            StopCoroutine(_respawnEnemies);
+
+        _respawnEnemies = null;
+        Enemy[] enemies = GetComponentsInChildren<Enemy>(includeInactive:true);
+        for (int i = 0; i < enemies.Length; i++){
+            enemies[i].Deactivate();
+            AddEnemyToQueue(enemies[i]);
+        }
+
+        _respawnEnemies = StartCoroutine(RespawnEnemies());
     }
 
     private void AddEnemyToQueue(Enemy enemy)
@@ -61,9 +78,9 @@ public class EnemyHolder : MonoBehaviour, IStartable, IService
         {
             Enemy enemy = Instantiate(_enemyPrefab, _startPoint.transform.position, Quaternion.identity, transform);
             enemy.gameObject.name = $"enemy {i}";
-            enemy.Respawn(_startPoint);
+            enemy.Deactivate();
 
-            yield return new WaitForSeconds(_intervalBetweenSpawns);
+            yield return new WaitForEndOfFrame();
         }
     }
 
