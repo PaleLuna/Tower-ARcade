@@ -1,29 +1,37 @@
+using PaleLuna.Architecture.GameComponent;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UIObjectControll : MonoBehaviour
+
+public class UIObjectControll : MonoBehaviour, IStartable
 {
     [SerializeField]
-    private GameObject _deleteBtn;
-    [SerializeField]
-    private GameObject _scaleSlider;
+    private Button _confirmBtn;
 
-    private void Start()
+    private bool _isStart = false;
+
+    public bool IsStarted => _isStart;
+
+    public void OnStart()
     {
-        UIEvents.objectSelectEvent.AddListener(OnObjectSelect);
-        UIEvents.objectDeselectEvent.AddListener(OnObjectDeselect);
+        if(_isStart) return;
+
+        GameEvents.gameRestart.AddListener(OnGameRestart);
+        GameEvents.levelConfirmEvent.AddListener(OnLevelConfirm);
+        GameEvents.levelPlaceFirstly.AddListener(OnLevelPlaceFirstly);
+
+        _confirmBtn.interactable = false;
+        _isStart = true;
     }
 
-    private void OnObjectSelect()
-    {
-        _deleteBtn.SetActive(true);
-        _scaleSlider.SetActive(true);
+    private void OnGameRestart(){
+        _confirmBtn.gameObject.SetActive(true);
     }
-
-    private void OnObjectDeselect()
-    {
-        _deleteBtn.SetActive(false);
-        _scaleSlider.SetActive(false);
+    private void OnLevelConfirm(){
+        _confirmBtn.gameObject.SetActive(false);
     }
-
+    private void OnLevelPlaceFirstly(){
+        _confirmBtn.interactable = true;
+        OnGameRestart();
+    }
 }
