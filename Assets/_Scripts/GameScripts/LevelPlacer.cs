@@ -1,4 +1,5 @@
 using PaleLuna.Architecture.GameComponent;
+using UnityEditor;
 using UnityEngine;
 
 public class LevelPlacer : MonoBehaviour, IStartable
@@ -31,5 +32,12 @@ public class LevelPlacer : MonoBehaviour, IStartable
     {
         _levelObj = Instantiate(_levelPrefab);
         _levelPrefab = null;
+
+        GameEvents.levelPlaceFirstly.Invoke();
+    }
+
+    [ContextMenu("Test")]
+    private void Test(){
+        GameEvents.levelPlaceFirstly.Invoke();
     }
 }
