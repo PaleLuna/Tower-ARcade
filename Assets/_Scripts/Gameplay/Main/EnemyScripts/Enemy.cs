@@ -54,6 +54,10 @@ public class Enemy : MonoBehaviour, IDamagable
         _stateHolder.ChangeState<EnemyStateDeactive>();
     }
 
+    public void Deactivate(){
+        _stateHolder.ChangeState<EnemyStateDeactive>();
+    }
+
     public void Respawn(PathPoint startPoint)
     {
         transform.position = startPoint.transform.position;
@@ -65,6 +69,6 @@ public class Enemy : MonoBehaviour, IDamagable
     public void FinishPointReached()
     {
         GameEvents.enemyFinishReachedEvent.Invoke(this);
-        _stateHolder.ChangeState<EnemyStateDeactive>();
+        Deactivate();
     }
 }
