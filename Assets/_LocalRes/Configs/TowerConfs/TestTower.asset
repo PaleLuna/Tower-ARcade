@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _combatRadius: 2.3
   _damageByHit: 1
-  _shotsPerMinute: 15
+  _shotsPerMinute: 10
   _initialSpeed: 1
