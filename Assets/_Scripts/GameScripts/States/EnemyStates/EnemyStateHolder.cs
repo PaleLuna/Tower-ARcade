@@ -7,7 +7,7 @@ public class EnemyStateHolder : StateHolder<EnemyState>
     {
         Registarion(new EnemyStateWalk(context, this));
         Registarion(new EnemyStateIdle(context, this));
-        Registarion(new EnemyStateDeath(context, this));
+        Registarion(new EnemyStateDeactive(context, this));
 
         ChangeState<EnemyStateIdle>();
     }

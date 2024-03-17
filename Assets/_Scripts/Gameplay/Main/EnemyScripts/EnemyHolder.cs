@@ -40,12 +40,13 @@ public class EnemyHolder : MonoBehaviour, IStartable, IService
 
         StartCoroutine(SpawnEnemies());
 
-        GameEvents.enemyDeathEvent.AddListener(OnEnemyDeath);
+        GameEvents.enemyDeathEvent.AddListener(AddEnemyToQueue);
+        GameEvents.enemyFinishReachedEvent.AddListener(AddEnemyToQueue);
 
         _isStart = true;
     }
 
-    private void OnEnemyDeath(Enemy enemy)
+    private void AddEnemyToQueue(Enemy enemy)
     {
         _enemiesToRespawn.Enqueue(enemy);
 

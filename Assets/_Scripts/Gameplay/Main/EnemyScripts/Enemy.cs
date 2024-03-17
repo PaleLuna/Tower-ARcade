@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-[RequireComponent (typeof(Rigidbody))]
+[RequireComponent(typeof(Rigidbody))]
 public class Enemy : MonoBehaviour, IDamagable
 {
     [Header("Config")]
@@ -31,8 +31,8 @@ public class Enemy : MonoBehaviour, IDamagable
 
     private void OnDisable()
     {
-        if(!_stateHolder.currentState.GetType().Equals(typeof(EnemyStateDeath)))
-            _stateHolder.ChangeState<EnemyStateDeath>();
+        if (!_stateHolder.currentState.GetType().Equals(typeof(EnemyStateDeactive)))
+            _stateHolder.ChangeState<EnemyStateDeactive>();
     }
 
     private void Awake()
@@ -48,8 +48,10 @@ public class Enemy : MonoBehaviour, IDamagable
     {
         _currentEnemyConf.health -= (int)damage;
 
-        if (_currentEnemyConf.health == 0 && _canDie)
-            _stateHolder.ChangeState<EnemyStateDeath>();
+        if (!_canDie || _currentEnemyConf.health != 0) return;
+
+        GameEvents.enemyDeathEvent.Invoke(this);
+        _stateHolder.ChangeState<EnemyStateDeactive>();
     }
 
     public void Respawn(PathPoint startPoint)
@@ -57,9 +59,12 @@ public class Enemy : MonoBehaviour, IDamagable
         transform.position = startPoint.transform.position;
         _stateHolder.ChangeState<EnemyStateWalk>();
         PathPointReached(startPoint);
-        gameObject.SetActive(true);
     }
 
     public void PathPointReached(PathPoint point) => _pathPointReachedEvent.Invoke(point);
-    public void FinishPointReached() => _stateHolder.ChangeState<EnemyStateDeath>();
+    public void FinishPointReached()
+    {
+        GameEvents.enemyFinishReachedEvent.Invoke(this);
+        _stateHolder.ChangeState<EnemyStateDeactive>();
+    }
 }
