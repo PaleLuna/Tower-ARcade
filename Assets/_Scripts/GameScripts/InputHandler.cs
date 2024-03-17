@@ -9,6 +9,9 @@ public class InputHandler : MonoBehaviour, IStartable
     [SerializeField]
     private RayScanner _screenTouchDetector;
 
+    [SerializeField]
+    private LevelPlacer _levelPlacer;
+
     private GameObject _levelObj;
 
     private bool _isStart = false;
@@ -16,21 +19,10 @@ public class InputHandler : MonoBehaviour, IStartable
 
     public void OnStart()
     {
-        _screenTouchDetector.SubscribeOnPlaneDetect(PlaceLevelIfNot);
+        _screenTouchDetector.SubscribeOnPlaneDetect(_levelPlacer.PlaceLevelIfNot);
         _screenTouchDetector.SubscribeOnGODetect(OnTapReaction);
     }
 
-    private void PlaceLevelIfNot(Vector3 point)
-    {
-        print("Tap");
-        if (_levelObj != null)
-            return;
-
-        _levelObj = Instantiate(_levelPrefab);
-        _levelPrefab = null;
-
-        _levelObj.transform.position = point;
-    }
 
     private void OnTapReaction(GameObject gObj)
     {
