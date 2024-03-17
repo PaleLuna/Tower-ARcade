@@ -5,9 +5,9 @@ public class InputHandler : MonoBehaviour, IStartable
 {
     [SerializeField]
     private GameObject _levelPrefab;
+
     [SerializeField]
     private RayScanner _screenTouchDetector;
-
 
     private GameObject _levelObj;
 
@@ -23,7 +23,8 @@ public class InputHandler : MonoBehaviour, IStartable
     private void PlaceLevelIfNot(Vector3 point)
     {
         print("Tap");
-        if (_levelObj != null) return;
+        if (_levelObj != null)
+            return;
 
         _levelObj = Instantiate(_levelPrefab);
         _levelPrefab = null;
@@ -36,8 +37,5 @@ public class InputHandler : MonoBehaviour, IStartable
         IInteractable interactable = gObj.GetComponent<IInteractable>();
         print($"ObjTap {interactable}");
         interactable?.Interact();
-        
-        
-            
     }
 }
