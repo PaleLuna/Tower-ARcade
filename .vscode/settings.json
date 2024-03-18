@@ -61,6 +61,7 @@
         "Behaviour",
         "Controll",
         "Interactable",
+        "Registarion",
         "Respawn",
         "Startable"
     ]
