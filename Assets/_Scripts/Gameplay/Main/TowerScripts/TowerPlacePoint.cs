@@ -2,9 +2,10 @@ using UnityEngine;
 
 public class TowerPlacePoint : MonoBehaviour, IInteractable
 {
-    [SerializeField] Transform _towerPrefab;
+    [SerializeField] Tower _towerPrefab;
+    [SerializeField] Vector3 _towerPos;
 
-    private Transform _tower = null;
+    private Tower _tower = null;
 
     public bool isFree => _tower != null;
 
@@ -15,7 +16,9 @@ public class TowerPlacePoint : MonoBehaviour, IInteractable
 
     private void TakeThisPlace()
     {
-        if(!isFree)
-            _tower = Instantiate(_towerPrefab, transform.position, Quaternion.identity);
+        if(!isFree){
+            _tower = Instantiate(_towerPrefab, transform.TransformPoint(_towerPos), Quaternion.identity);
+            _tower.transform.parent = transform;
+        }
     }
 }
