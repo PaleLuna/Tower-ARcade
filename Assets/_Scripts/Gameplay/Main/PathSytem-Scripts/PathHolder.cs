@@ -4,13 +4,10 @@ using Services;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PathHolder : MonoBehaviour, IService, IStartable
+public class PathHolder : MonoBehaviour, IService
 {
     [SerializeField]
     private List<Path> _paths = new();
-
-    private bool _isStart = false;
-    public bool IsStarted => _isStart;
 
     private void OnValidate()
     {
@@ -18,13 +15,9 @@ public class PathHolder : MonoBehaviour, IService, IStartable
             item.Refresh();
     }
 
-    public void OnStart()
-    {
+    private void Awake() {
         ServiceManager.Instance.SceneLocator.Registarion(this);
-
-        _isStart = true;
     }
-
     public Path GetPath(int pathIndex)
     {
         if(pathIndex < _paths.Count)
