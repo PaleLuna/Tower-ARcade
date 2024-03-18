@@ -1,29 +1,33 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
 
-[RequireComponent(typeof(ARRaycastManager))]
 public class RayScanner : MonoBehaviour
 {
+    [Header("Main Camera")]
     [SerializeField]
     private Camera _mainCam;
+
+    [Header("Raycasters")]
 
     [SerializeField]
     private ARRaycastManager _raycastManager;
 
+    [SerializeField]
+    private GraphicRaycaster _graphicRaycaster;
+
+
+    [Header("Filters")]
     [SerializeField]
     private LayerMask _layerMask;
 
     private List<ARRaycastHit> _raycastHits = new();
 
     private RayCastEvents _rayCastEvents = new();
-
-    private void OnValidate()
-    {
-        _raycastManager ??= GetComponent<ARRaycastManager>();
-    }
 
     private void Start()
     {
@@ -85,7 +89,13 @@ public class RayScanner : MonoBehaviour
 
     private bool IsUI(Vector2 startPos)
     {
-        bool flag = IsGameObject(startPos, out GameObject gObj) && gObj.GetComponent<CanvasRenderer>() ;
+        PointerEventData eventData = new PointerEventData(EventSystem.current);
+        eventData.position = startPos;
+        List<RaycastResult> results = new List<RaycastResult>();
+
+        _graphicRaycaster.Raycast(eventData, results);
+
+        bool flag = results.Count > 0;
 
         print($"is UI: {flag}");
         return flag;
