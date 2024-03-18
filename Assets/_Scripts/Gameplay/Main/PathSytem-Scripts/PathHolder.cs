@@ -1,4 +1,3 @@
-using PaleLuna.Architecture.GameComponent;
 using PaleLuna.Architecture.Services;
 using Services;
 using System.Collections.Generic;
@@ -15,7 +14,8 @@ public class PathHolder : MonoBehaviour, IService
             item.Refresh();
     }
 
-    private void Awake() {
+    private void Start() {
+        print("Registration");
         ServiceManager.Instance.SceneLocator.Registarion(this);
     }
     public Path GetPath(int pathIndex)
@@ -24,6 +24,4 @@ public class PathHolder : MonoBehaviour, IService
             return _paths[pathIndex];
         return null;
     }
-
-    
 }
