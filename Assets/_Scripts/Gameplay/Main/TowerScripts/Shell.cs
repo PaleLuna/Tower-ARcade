@@ -38,6 +38,8 @@ public class Shell : MonoBehaviour
 
         _rigidbody.AddForce(diretction * force, ForceMode.Impulse);
         _damage = damage;
+
+        StartCoroutine(Timer());
     }
 
     private void OnTriggerEnter(Collider other)
