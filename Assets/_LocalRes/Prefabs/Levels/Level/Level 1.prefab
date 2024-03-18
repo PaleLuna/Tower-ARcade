@@ -361,6 +361,7 @@ MonoBehaviour:
     - {fileID: 998734827790635406}
     - {fileID: 1490920840860899511}
     - {fileID: 3428052339273559836}
+  _isDebug: 0
 --- !u!1 &8461143827279030106
 GameObject:
   m_ObjectHideFlags: 0
