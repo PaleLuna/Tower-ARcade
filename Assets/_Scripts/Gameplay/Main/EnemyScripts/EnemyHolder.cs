@@ -2,6 +2,7 @@ using PaleLuna.Architecture.GameComponent;
 using PaleLuna.Architecture.Services;
 using PaleLuna.DataHolder;
 using Services;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -24,6 +25,7 @@ public class EnemyHolder : MonoBehaviour, IStartable, IService
     private Coroutine _respawnEnemies;
 
     private bool _isStart = false;
+
     public bool IsStarted => _isStart;
 
     public void OnStart()
@@ -34,11 +36,10 @@ public class EnemyHolder : MonoBehaviour, IStartable, IService
 
         _enemiesToRespawn = new(_maxEnemiesOnLevel);
 
-        GameEvents.enemyDeathEvent.AddListener(AddEnemyToQueue);
-        GameEvents.enemyFinishReachedEvent.AddListener(AddEnemyToQueue);
+        GameEvents.enemyDeathEvent.AddListener(OnEnemyDeactivate);
 
         GameEvents.levelPlaceFirstly.AddListener(OnLevelPlaceFirstly);
-        GameEvents.gameRestart.AddListener(OnLevelRestart);
+        GameEvents.gameRestart.AddListener(DeactivateAllEnemies);
         GameEvents.levelConfirmEvent.AddListener(OnLevelRestart);
 
         _isStart = true;
@@ -50,26 +51,50 @@ public class EnemyHolder : MonoBehaviour, IStartable, IService
     }
 
     private void OnLevelRestart(){
-        if(_respawnEnemies != null)
-            StopCoroutine(_respawnEnemies);
+
+        print("Restarting");
+
+        StopRespawn();
 
         _respawnEnemies = null;
+
+        StartRespawn();
+    }
+
+    private void OnEnemyDeactivate(Enemy enemy){
+        AddEnemyToQueue(enemy);
+
+        StartRespawn();
+    }
+
+    private void DeactivateAllEnemies()
+    {
+        StopRespawn();
+
         Enemy[] enemies = GetComponentsInChildren<Enemy>(includeInactive:true);
-        for (int i = 0; i < enemies.Length; i++){
+        for (int i = 0; i < enemies.Length; i++)
+        {
             enemies[i].Deactivate();
             AddEnemyToQueue(enemies[i]);
         }
     }
 
-    private void AddEnemyToQueue(Enemy enemy)
-    {
+    private void AddEnemyToQueue(Enemy enemy) =>
         _enemiesToRespawn.Enqueue(enemy);
 
-        if (_respawnEnemies != null) return;
 
-        _respawnEnemies = StartCoroutine(RespawnEnemies());
+    private void StartRespawn()
+    {
+        if (_respawnEnemies == null)
+            _respawnEnemies = StartCoroutine(RespawnEnemies());
+    }
+    private void StopRespawn()
+    {
+        if(_respawnEnemies != null)
+            StopCoroutine(_respawnEnemies);
     }
 
+    #region [ Coroutines ]
     private IEnumerator SpawnEnemies()
     {
         for(int i = 0; i < _maxEnemiesOnLevel; i++)
@@ -77,11 +102,11 @@ public class EnemyHolder : MonoBehaviour, IStartable, IService
             Enemy enemy = Instantiate(_enemyPrefab, _startPoint.transform.position, Quaternion.identity, transform);
             enemy.gameObject.name = $"enemy {i}";
             enemy.Deactivate();
+            AddEnemyToQueue(enemy);
 
             yield return new WaitForEndOfFrame();
         }
     }
-
     private IEnumerator RespawnEnemies()
     {
         while(_enemiesToRespawn.Count > 0)
@@ -94,4 +119,5 @@ public class EnemyHolder : MonoBehaviour, IStartable, IService
 
         _respawnEnemies = null;
     }
+    #endregion
 }
