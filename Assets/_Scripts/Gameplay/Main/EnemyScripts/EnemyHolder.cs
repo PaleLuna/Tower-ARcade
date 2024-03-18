@@ -59,8 +59,6 @@ public class EnemyHolder : MonoBehaviour, IStartable, IService
             enemies[i].Deactivate();
             AddEnemyToQueue(enemies[i]);
         }
-
-        _respawnEnemies = StartCoroutine(RespawnEnemies());
     }
 
     private void AddEnemyToQueue(Enemy enemy)
