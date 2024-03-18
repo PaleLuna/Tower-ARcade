@@ -7,6 +7,8 @@ public class UIObjectControll : MonoBehaviour, IStartable
 {
     [SerializeField]
     private Button _confirmBtn;
+    [SerializeField]
+    private Button _restartBtn;
 
     private bool _isStart = false;
 
@@ -26,9 +28,11 @@ public class UIObjectControll : MonoBehaviour, IStartable
 
     private void OnGameRestart(){
         _confirmBtn.gameObject.SetActive(true);
+        _restartBtn.gameObject.SetActive(false);
     }
     private void OnLevelConfirm(){
         _confirmBtn.gameObject.SetActive(false);
+        _restartBtn.gameObject.SetActive(true);
     }
     private void OnLevelPlaceFirstly(){
         _confirmBtn.interactable = true;
