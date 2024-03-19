@@ -1,0 +1,17 @@
+# ninja log v5
+25	1783	7309351685440022	GameActivity/CMakeFiles/game.dir/UGAInputMotionEvent.cpp.o	c2f4615e803a2d11
+11	1890	7309351686555682	GameActivity/CMakeFiles/game.dir/UGADebug.cpp.o	877fcaab11c224f
+21	1781	7309351685369180	GameActivity/CMakeFiles/game.dir/UGASoftKeyboard.cpp.o	6ce6cf0d0a790576
+8	1853	7309351686202330	GameActivity/CMakeFiles/game.dir/UGAEntry.cpp.o	c64f66857f7565eb
+18	1782	7309351685039964	GameActivity/CMakeFiles/game.dir/UGAInputKeyEvent.cpp.o	ba5c7af41b8fba9b
+4	1915	7309351686737439	GameActivity/CMakeFiles/game.dir/UGAInput.cpp.o	7536bc51c8a345e2
+14	1969	7309351687341513	GameActivity/CMakeFiles/game.dir/UGAApplication.cpp.o	4f7d1fc5a308a8ba
+1969	2135	7309351688591790	D:/3.Projects/GitHub Repositories/UnityProjects/Empire-s-fall/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/Debug/1v3ci25s/obj/arm64-v8a/libgame.so	6323b789b3829b10
+8	1614	7310061244200495	GameActivity/CMakeFiles/game.dir/UGADebug.cpp.o	877fcaab11c224f
+11	1627	7310061244331480	GameActivity/CMakeFiles/game.dir/UGAEntry.cpp.o	c64f66857f7565eb
+26	1629	7310061244603920	GameActivity/CMakeFiles/game.dir/UGAInputMotionEvent.cpp.o	c2f4615e803a2d11
+22	1634	7310061244614205	GameActivity/CMakeFiles/game.dir/UGASoftKeyboard.cpp.o	6ce6cf0d0a790576
+18	1673	7310061245011256	GameActivity/CMakeFiles/game.dir/UGAInputKeyEvent.cpp.o	ba5c7af41b8fba9b
+3	1874	7310061247060527	GameActivity/CMakeFiles/game.dir/UGAApplication.cpp.o	4f7d1fc5a308a8ba
+14	1880	7310061247100602	GameActivity/CMakeFiles/game.dir/UGAInput.cpp.o	7536bc51c8a345e2
+1880	2148	7310061249192077	D:/3.Projects/GitHub Repositories/UnityProjects/Empire-s-fall/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/Debug/1v3ci25s/obj/arm64-v8a/libgame.so	6323b789b3829b10
