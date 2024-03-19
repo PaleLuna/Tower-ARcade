@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30f650c1b2033f444b58ce7b342843e5, type: 3}
   m_Name: TestTower
   m_EditorClassIdentifier: 
-  _combatRadius: 2.3
+  _combatRadius: 2.1
   _damageByHit: 1
   _shotsPerMinute: 15
-  _initialSpeed: 0.5
+  _initialSpeed: 0.3
