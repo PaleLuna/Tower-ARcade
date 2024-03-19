@@ -14,7 +14,7 @@ public class PathHolder : MonoBehaviour, IService
             item.Refresh();
     }
 
-    private void Start() {
+    private void Awake() {
         ServiceManager.Instance.SceneLocator.Registarion(this);
     }
     public Path GetPath(int pathIndex)
