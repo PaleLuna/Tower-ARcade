@@ -12,4 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9715378c2390ca6489d9918d970ca7c6, type: 3}
   m_Name: TestLevel
   m_EditorClassIdentifier: 
-  _maxBaseHealthPoint: 1
+  _levelStartChar:
+    maxBaseHealthPoint: 1
+    startBalance: 100
