@@ -1399,6 +1399,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb0c2f518d8f22446ac58b0012137ec4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _levelConf: {fileID: 11400000, guid: b9e7832b3f792c54498a7360299db7eb, type: 2}
 --- !u!1 &913305687
 GameObject:
   m_ObjectHideFlags: 0
@@ -1460,8 +1461,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69b275fe469c43446b875d52437eaf9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _levelPrefab: {fileID: 406372932532760327, guid: ec98165da8aacab4099345703050e889,
-    type: 3}
 --- !u!1 &1123378411
 GameObject:
   m_ObjectHideFlags: 0
