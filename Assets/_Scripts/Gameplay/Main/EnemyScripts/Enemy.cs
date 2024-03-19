@@ -10,8 +10,12 @@ public class Enemy : MonoBehaviour, IDamagable
     private EnemyConf _currentEnemyConf;
 
     [Header("Components")]
-    [SerializeField] Rigidbody _rigidbody;
+    [SerializeField] 
+    Rigidbody _rigidbody;
+    [SerializeField] 
+    StatusBar _healthBar;
 
+    [Header("Flags")]
     [SerializeField]
     private bool _canDie = true;
 
@@ -40,13 +44,15 @@ public class Enemy : MonoBehaviour, IDamagable
         _stateHolder = new(this);
 
         _currentEnemyConf = ScriptableObject.CreateInstance<EnemyConf>();
-        _currentEnemyConf.Copy(_baseEnemyConf);
+        UpdateCurrentConf();
     }
     #endregion
 
     public void SetDamage(float damage)
     {
         _currentEnemyConf.health -= (int)damage;
+
+        _healthBar.SetCurrent(_currentEnemyConf.health);
 
         if (!_canDie || _currentEnemyConf.health != 0) return;
 
@@ -61,6 +67,9 @@ public class Enemy : MonoBehaviour, IDamagable
     public void Respawn(PathPoint startPoint)
     {
         transform.position = startPoint.transform.position;
+
+        UpdateCurrentConf();
+
         _stateHolder.ChangeState<EnemyStateWalk>();
         PathPointReached(startPoint);
     }
@@ -70,5 +79,14 @@ public class Enemy : MonoBehaviour, IDamagable
     {
         GameEvents.enemyFinishReachedEvent.Invoke(this);
         Deactivate();
+    }
+
+
+    private void UpdateCurrentConf()
+    {
+        _currentEnemyConf.Copy(_baseEnemyConf);
+
+        _healthBar.SetMax(_currentEnemyConf.health);
+        _healthBar.SetCurrent(_currentEnemyConf.health);
     }
 }
