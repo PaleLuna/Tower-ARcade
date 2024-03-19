@@ -48,4 +48,9 @@ public class Tower : MonoBehaviour
 
         _towerHead.rotation = Quaternion.AngleAxis(rotation.eulerAngles.y, Vector3.up);
     }
+
+    private void OnDestroy() 
+    {
+        _stateHolder.Clear();
+    }
 }
