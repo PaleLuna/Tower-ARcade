@@ -19,12 +19,15 @@ public class TowerPlacePoint : MonoBehaviour, IInteractable
         TakeThisPlace(); 
     }
 
+    [ContextMenu("Clear")]
     public void Clear()
     {
         if(isFree) return;
         Destroy(_tower.gameObject);
+        _tower = null;
     }
 
+    [ContextMenu("Create")]
     private void TakeThisPlace()
     {
         if(isFree){
