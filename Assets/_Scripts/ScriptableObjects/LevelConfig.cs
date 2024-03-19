@@ -4,11 +4,17 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "LevelConf", menuName = "Configs/Level")]
 public class LevelConfig : ScriptableObject
 {
+    [Header("Level Prefab")]
+    [SerializeField]
+    private Base _levelPrefab;
+
     [Header("Level start characteristics")]
     [SerializeField]
     LevelStartCharacteristics _levelStartChar;
 
     #region Properties
+        public Base levelPrefab => _levelPrefab;
+
         #region [ Level start properties  ]
             public int maxBaseHealthPoint => _levelStartChar.maxBaseHealthPoint;
             public int startBalance => _levelStartChar.startBalance;
