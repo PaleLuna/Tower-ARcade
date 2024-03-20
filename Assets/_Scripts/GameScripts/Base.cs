@@ -1,4 +1,3 @@
-using System;
 using Services;
 using UnityEngine;
 
@@ -15,7 +14,8 @@ public class Base : MonoBehaviour
 
     private void OnEnemyFinishReached(Enemy enemy){
 
-        if(!_healthCounter.TryTake(enemy.enemyConf.penaltyForPassing))
+        _healthCounter.TryTake(enemy.enemyConf.penaltyForPassing);
+        if(_healthCounter.currentValue == 0)
             GameEvents.gameDefeatEvent.Invoke();
     }
 }
