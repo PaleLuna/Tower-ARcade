@@ -36,6 +36,7 @@ public class EnemyConf : ScriptableObject
     {
         _mainCharacteristics.Copy(other._mainCharacteristics);
         _penaltyForPassing = other._penaltyForPassing;
+        _awardForKill = other._awardForKill;
     }
 }
 
