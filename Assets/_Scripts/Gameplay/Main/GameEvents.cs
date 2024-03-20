@@ -8,6 +8,9 @@ public static class GameEvents
     public static readonly UnityEvent gameDefeatEvent = new();
     public static readonly UnityEvent gameRestart = new();
 
+    public static readonly UnityEvent gameSetPauseEvent = new();
+    public static readonly UnityEvent gameSetResumeEvent = new();
+
     #endregion
 
     #region [ Global level events ]
