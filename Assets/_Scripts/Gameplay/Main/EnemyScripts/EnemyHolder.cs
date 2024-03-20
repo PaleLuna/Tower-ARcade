@@ -1,8 +1,6 @@
 using PaleLuna.Architecture.GameComponent;
 using PaleLuna.Architecture.Services;
-using PaleLuna.DataHolder;
 using Services;
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -101,6 +99,7 @@ public class EnemyHolder : MonoBehaviour, IStartable, IService
         {
             Enemy enemy = Instantiate(_enemyPrefab, _startPoint.transform.position, Quaternion.identity, transform);
             enemy.gameObject.name = $"enemy {i}";
+
             enemy.Deactivate();
             AddEnemyToQueue(enemy);
 

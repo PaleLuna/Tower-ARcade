@@ -4,6 +4,8 @@ public class Wallet : IService
 {
     private int _currentBalance = 0;
 
+    public int currentBalance => _currentBalance;
+
 
     public void AddToWallet(int value) => SetCurrentBalance(_currentBalance + value);
 
@@ -17,7 +19,7 @@ public class Wallet : IService
         return isPositiveBalance;
     }
 
-    private void SetCurrentBalance(int balance)
+    public void SetCurrentBalance(int balance)
     {
         _currentBalance = balance;
 

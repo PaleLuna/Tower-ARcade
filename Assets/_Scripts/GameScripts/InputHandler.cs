@@ -30,7 +30,6 @@ public class InputHandler : MonoBehaviour, IStartable
     private void OnTapReaction(GameObject gObj)
     {
         IInteractable interactable = gObj.GetComponent<IInteractable>();
-        print($"ObjTap {interactable}");
         interactable?.Interact();
     }
     private void OnLevelPlaceConfirm(){
@@ -39,6 +38,7 @@ public class InputHandler : MonoBehaviour, IStartable
 
     private void OnLevelRestart(){
         _screenTouchDetector.SubscribeOnPlaneDetect(_levelPlacer.PlaceLevel);
+
         _screenTouchDetector.SubscribeOnGODetect(OnTapReaction);
     }
     private void OnGameDefeat(){
