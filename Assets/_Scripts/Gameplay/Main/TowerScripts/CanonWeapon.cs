@@ -16,6 +16,6 @@ public class CanonWeapon : TowerWeapon
 
         shell.ThrowThis(direction, m_towerConf.initialSpeed, m_towerConf.damageByHit);
 
-        m_context.StartCoroutine(CoolDown());
+        m_readyToFire = false;
     }
 }
