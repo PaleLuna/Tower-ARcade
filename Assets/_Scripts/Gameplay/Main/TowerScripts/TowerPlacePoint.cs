@@ -1,4 +1,4 @@
-using JetBrains.Annotations;
+using Services;
 using UnityEngine;
 
 public class TowerPlacePoint : MonoBehaviour, IInteractable
@@ -8,10 +8,14 @@ public class TowerPlacePoint : MonoBehaviour, IInteractable
 
     private Tower _tower = null;
 
+    private Wallet _wallet;
+
     public bool isFree => _tower == null;
 
     private void Start(){
         GameEvents.gameRestart.AddListener(Clear);
+
+        _wallet = ServiceManager.Instance.SceneLocator.Get<Wallet>();
     }
 
     public void Interact()
@@ -30,9 +34,16 @@ public class TowerPlacePoint : MonoBehaviour, IInteractable
     [ContextMenu("Create")]
     private void TakeThisPlace()
     {
-        if(isFree){
+        if(isFree && CheckBalance(_towerPrefab)){
             _tower = Instantiate(_towerPrefab, transform.TransformPoint(_towerPos), Quaternion.identity);
             _tower.transform.parent = transform;
         }
+    }
+
+    private bool CheckBalance(Tower tower)
+    {
+        print(_wallet);
+        bool flag = _wallet.TryTakeFromWallet(tower.towerConf.cost);
+        return flag;
     }
 }
