@@ -25,6 +25,8 @@ public class ValueCounterInit : IInitializer
 
         valueCounterHolder.Registarion(new Wallet());
         valueCounterHolder.Registarion(new HealthCounter());
+        valueCounterHolder.Registarion(new EnemyKillCounter());
+        valueCounterHolder.Registarion(new ScoreCounter());
 
         ServiceManager.Instance.SceneLocator.Registarion(valueCounterHolder);
 
