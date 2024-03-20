@@ -21,6 +21,7 @@ public class UIObjectControll : MonoBehaviour, IStartable
         GameEvents.gameRestart.AddListener(OnGameRestart);
         GameEvents.levelConfirmEvent.AddListener(OnLevelConfirm);
         GameEvents.levelPlaceFirstly.AddListener(OnLevelPlaceFirstly);
+        GameEvents.gameDefeatEvent.AddListener(OnGameDefeat);
 
         _confirmBtn.interactable = false;
         _isStart = true;
@@ -37,5 +38,10 @@ public class UIObjectControll : MonoBehaviour, IStartable
     private void OnLevelPlaceFirstly(){
         _confirmBtn.interactable = true;
         OnGameRestart();
+    }
+
+    private void OnGameDefeat()
+    {
+        _restartBtn.gameObject.SetActive(true);
     }
 }
