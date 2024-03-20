@@ -1,3 +1,4 @@
+using PaleLuna.Architecture.Controllers;
 using PaleLuna.Architecture.GameComponent;
 using PaleLuna.Architecture.Services;
 using Services;
@@ -5,7 +6,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyHolder : MonoBehaviour, IStartable, IService
+public class EnemyHolder : MonoBehaviour, IStartable, IService, IPausable
 {
     [SerializeField]
     private Enemy _enemyPrefab;
@@ -39,6 +40,8 @@ public class EnemyHolder : MonoBehaviour, IStartable, IService
         GameEvents.levelPlaceFirstly.AddListener(OnLevelPlaceFirstly);
         GameEvents.gameRestart.AddListener(DeactivateAllEnemies);
         GameEvents.levelConfirmEvent.AddListener(OnLevelRestart);
+
+        ServiceManager.Instance.GlobalServices.Get<GameController>().pausablesHolder.Registration(this);   
 
         _isStart = true;
     }
@@ -81,6 +84,17 @@ public class EnemyHolder : MonoBehaviour, IStartable, IService
         _enemiesToRespawn.Enqueue(enemy);
 
 
+
+    public void OnPause()
+    {
+        StopRespawn();
+    }
+
+    public void OnResume()
+    {
+        StartRespawn();
+    }
+
     private void StartRespawn()
     {
         if (_respawnEnemies == null)
@@ -88,9 +102,13 @@ public class EnemyHolder : MonoBehaviour, IStartable, IService
     }
     private void StopRespawn()
     {
-        if(_respawnEnemies != null)
-            StopCoroutine(_respawnEnemies);
+        if(_respawnEnemies == null) return;
+
+        StopCoroutine(_respawnEnemies);
+        _respawnEnemies = null;
     }
+
+    
 
     #region [ Coroutines ]
     private IEnumerator SpawnEnemies()
@@ -118,5 +136,7 @@ public class EnemyHolder : MonoBehaviour, IStartable, IService
 
         _respawnEnemies = null;
     }
+
+    
     #endregion
 }
