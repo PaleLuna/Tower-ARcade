@@ -9,9 +9,13 @@ public class GameAREntryPoint : SceneEntryPoint
         await base.Setup();
     }
 
+    protected override void FillInitializers()
+    {
+        _initializers.Registration(new ValueCounterInit());
+    }
+
     protected override void FillSceneLocator()
     {
         _sceneServiceLocator.Registarion(new InputSystem());
-        _sceneServiceLocator.Registarion(new Wallet());
     }
 }

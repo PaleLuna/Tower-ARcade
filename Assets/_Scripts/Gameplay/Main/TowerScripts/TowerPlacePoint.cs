@@ -15,7 +15,7 @@ public class TowerPlacePoint : MonoBehaviour, IInteractable
     private void Start(){
         GameEvents.gameRestart.AddListener(Clear);
 
-        _wallet = ServiceManager.Instance.SceneLocator.Get<Wallet>();
+        _wallet = ServiceManager.Instance.SceneLocator.Get<ValueCounterHolder>().Get<Wallet>();
     }
 
     public void Interact()
@@ -42,8 +42,7 @@ public class TowerPlacePoint : MonoBehaviour, IInteractable
 
     private bool CheckBalance(Tower tower)
     {
-        print(_wallet);
-        bool flag = _wallet.TryTakeFromWallet(tower.towerConf.cost);
+        bool flag = _wallet.TryTake(tower.towerConf.cost);
         return flag;
     }
 }

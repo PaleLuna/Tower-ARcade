@@ -3,36 +3,19 @@ using Services;
 using UnityEngine;
 
 public class Base : MonoBehaviour
-{
-    [SerializeField]
-    private int _maxHealthPoints;
-    [SerializeField]
-    private int _currentHealthPoints;
+{  
+    HealthCounter _healthCounter;
 
     private void Start(){
         
-        _currentHealthPoints = _maxHealthPoints;
+        _healthCounter = ServiceManager.Instance.SceneLocator.Get<ValueCounterHolder>().Get<HealthCounter>();
 
         GameEvents.enemyFinishReachedEvent.AddListener(OnEnemyFinishReached);
-        GameEvents.gameRestart.AddListener(OnGameRestart);
-    }
-
-    public void SetMaxHP(int value){
-        _maxHealthPoints = value;
-    }
-    public void ResetCurrentHP()
-    {
-        _currentHealthPoints = _maxHealthPoints;
     }
 
     private void OnEnemyFinishReached(Enemy enemy){
-        _currentHealthPoints = Math.Max(_currentHealthPoints - enemy.enemyConf.penaltyForPassing, 0);
 
-        if(_currentHealthPoints == 0)
+        if(!_healthCounter.TryTake(enemy.enemyConf.penaltyForPassing))
             GameEvents.gameDefeatEvent.Invoke();
-    }
-    private void OnGameRestart()
-    {
-        ResetCurrentHP();
     }
 }

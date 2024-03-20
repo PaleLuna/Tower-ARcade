@@ -1,3 +1,4 @@
+using System;
 using PaleLuna.Architecture.GameComponent;
 using PaleLuna.Architecture.Services;
 using Services;
@@ -8,7 +9,7 @@ public class Game : MonoBehaviour, IService, IStartable
     [SerializeField]
     private LevelConfig _levelConf;
 
-    private ServiceLocator _sceneLocator;
+    private ValueCounterHolder _counters;
 
     private bool _isStart = false;
 
@@ -21,37 +22,41 @@ public class Game : MonoBehaviour, IService, IStartable
     {
         if(_isStart) return;
 
-        _sceneLocator = ServiceManager.Instance.SceneLocator;
+        _counters = ServiceManager.Instance.SceneLocator.Get<ValueCounterHolder>();
 
-        _sceneLocator.Registarion(this);
+        ServiceManager.Instance.SceneLocator.Registarion(this);
 
         GameEvents.gameDefeatEvent.AddListener(OnGameDefeat);
         GameEvents.gameRestart.AddListener(OnGameRestart);
         GameEvents.enemyDeathEvent.AddListener(OnEnemyDie);
 
-        _levelConf.levelPrefab.SetMaxHP(_levelConf.maxBaseHealthPoint);
-
-        ResetWallet();
+        OnGameRestart();
 
         _isStart = true;
     }
 
+    private void ResetHealth()
+    {
+        _counters.Get<HealthCounter>().SetCurrentValue(levelConfig.maxBaseHealthPoint);
+    }
+
     private void ResetWallet()
     {
-        _sceneLocator.Get<Wallet>().SetCurrentBalance(levelConfig.startBalance);
+        _counters.Get<Wallet>().SetCurrentValue(levelConfig.startBalance);
     }
 
     private void OnGameDefeat()
     {
-        
+        //TODO
     }
     private void OnGameRestart()
     {
         ResetWallet();
+        ResetHealth();
     }
 
     private void OnEnemyDie(Enemy enemy){
-        _sceneLocator.Get<Wallet>().AddToWallet(enemy.enemyConf.awardForKill);
+        _counters.Get<Wallet>().Add(enemy.enemyConf.awardForKill);
     }
 
 }
