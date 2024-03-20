@@ -5,10 +5,18 @@ using UnityEngine.UI;
 
 public class UIObjectControll : MonoBehaviour, IStartable
 {
+    [Header("Buttons")]
     [SerializeField]
     private Button _confirmBtn;
+
     [SerializeField]
-    private Button _restartBtn;
+    private Button _pauseBtn;
+
+    [Header("Panels")]
+    [SerializeField]
+    private GameObject _pausePanel;
+    [SerializeField]
+    private GameObject _gameDefeatPanel;
 
     private bool _isStart = false;
 
@@ -18,30 +26,53 @@ public class UIObjectControll : MonoBehaviour, IStartable
     {
         if(_isStart) return;
 
-        GameEvents.gameRestart.AddListener(OnGameRestart);
-        GameEvents.levelConfirmEvent.AddListener(OnLevelConfirm);
-        GameEvents.levelPlaceFirstly.AddListener(OnLevelPlaceFirstly);
-        GameEvents.gameDefeatEvent.AddListener(OnGameDefeat);
+        SubscribeOnEvents();
 
         _confirmBtn.interactable = false;
         _isStart = true;
     }
 
+    private void SubscribeOnEvents()
+    {
+        GameEvents.gameRestart.AddListener(OnGameRestart);
+        GameEvents.levelConfirmEvent.AddListener(OnLevelConfirm);
+        GameEvents.levelPlaceFirstly.AddListener(OnLevelPlaceFirstly);
+        GameEvents.gameDefeatEvent.AddListener(OnGameDefeat);
+
+        GameEvents.gameSetPauseEvent.AddListener(OnGameSetPause);
+        GameEvents.gameSetResumeEvent.AddListener(OnGameSetResume);
+    }
+
     private void OnGameRestart(){
         _confirmBtn.gameObject.SetActive(true);
-        _restartBtn.gameObject.SetActive(false);
+
+        _gameDefeatPanel.SetActive(false);
+        OnGameSetResume();
+        _pauseBtn.gameObject.SetActive(false);
     }
     private void OnLevelConfirm(){
         _confirmBtn.gameObject.SetActive(false);
-        _restartBtn.gameObject.SetActive(true);
+        _pauseBtn.gameObject.SetActive(true);
     }
     private void OnLevelPlaceFirstly(){
         _confirmBtn.interactable = true;
         OnGameRestart();
     }
 
+    private void OnGameSetPause()
+    {
+        _pauseBtn.gameObject.SetActive(false);
+        _pausePanel.SetActive(true);
+    }
+    private void OnGameSetResume()
+    {
+        _pausePanel.SetActive(false);
+        _pauseBtn.gameObject.SetActive(true);
+    }
+
     private void OnGameDefeat()
     {
-        _restartBtn.gameObject.SetActive(true);
+        _gameDefeatPanel.SetActive(true);
+        _pauseBtn.gameObject.SetActive(false);
     }
 }

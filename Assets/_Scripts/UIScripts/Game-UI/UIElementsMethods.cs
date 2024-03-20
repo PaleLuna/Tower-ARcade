@@ -7,4 +7,10 @@ public class UIElementsMethods : MonoBehaviour
 
     public void RestartLevel() =>
         GameEvents.gameRestart.Invoke();
+
+    public void SetPause() =>
+        GameEvents.gameSetPauseEvent.Invoke();
+    
+    public void SetResume() =>
+        GameEvents.gameSetResumeEvent.Invoke();
 }
