@@ -8,6 +8,10 @@ public class CameraScript : MonoBehaviour, IService, IStartable
 {
     [SerializeField]
     private Camera _camera;
+    [SerializeField]
+    private Transform _camParentTransform;
+
+    private Vector3 _originScale;
 
     public Camera cam => _camera;
 
@@ -19,9 +23,14 @@ public class CameraScript : MonoBehaviour, IService, IStartable
         if(_isStart) return;
 
         ServiceManager.Instance.SceneLocator.Registarion(this);
+        _originScale = _camParentTransform.localScale;
 
         _isStart = true;
 
+    }
+
+    public void OnChangeScale(float value){
+        _camParentTransform.localScale = _originScale * value;
     }
 
 }

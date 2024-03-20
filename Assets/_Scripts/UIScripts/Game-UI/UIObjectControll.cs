@@ -17,6 +17,8 @@ public class UIObjectControll : MonoBehaviour, IStartable
     private GameObject _pausePanel;
     [SerializeField]
     private GameObject _gameDefeatPanel;
+    [SerializeField]
+    private GameObject _camScaleSlider;
 
     private bool _isStart = false;
 
@@ -45,6 +47,7 @@ public class UIObjectControll : MonoBehaviour, IStartable
 
     private void OnGameRestart(){
         _confirmBtn.gameObject.SetActive(true);
+        _camScaleSlider.SetActive(true);
 
         _gameDefeatPanel.SetActive(false);
         OnGameSetResume();
@@ -52,10 +55,12 @@ public class UIObjectControll : MonoBehaviour, IStartable
     }
     private void OnLevelConfirm(){
         _confirmBtn.gameObject.SetActive(false);
+        _camScaleSlider.SetActive(false);
         _pauseBtn.gameObject.SetActive(true);
     }
     private void OnLevelPlaceFirstly(){
         _confirmBtn.interactable = true;
+        _camScaleSlider.SetActive(true);
         OnGameRestart();
     }
 
