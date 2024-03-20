@@ -22,7 +22,8 @@ public static class GameEvents
 
     #endregion
 
-    #region [ Global wallet events ]
+    #region [ Global counters events ]
         public static readonly UnityEvent<int> walletBalanceChangedEvent = new();
+        public static readonly UnityEvent<int> baseHealthChangedEvent = new();
     #endregion
 }
