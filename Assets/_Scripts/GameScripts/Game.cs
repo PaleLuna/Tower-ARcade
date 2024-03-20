@@ -8,6 +8,8 @@ public class Game : MonoBehaviour, IService, IStartable
     [SerializeField]
     private LevelConfig _levelConf;
 
+    private ServiceLocator _sceneLocator;
+
     private bool _isStart = false;
 
     public bool IsStarted => _isStart;
@@ -19,18 +21,37 @@ public class Game : MonoBehaviour, IService, IStartable
     {
         if(_isStart) return;
 
-        ServiceManager.Instance.SceneLocator.Registarion(this);
+        _sceneLocator = ServiceManager.Instance.SceneLocator;
+
+        _sceneLocator.Registarion(this);
 
         GameEvents.gameDefeatEvent.AddListener(OnGameDefeat);
+        GameEvents.gameRestart.AddListener(OnGameRestart);
+        GameEvents.enemyDeathEvent.AddListener(OnEnemyDie);
 
         _levelConf.levelPrefab.SetMaxHP(_levelConf.maxBaseHealthPoint);
+
+        ResetWallet();
 
         _isStart = true;
     }
 
+    private void ResetWallet()
+    {
+        _sceneLocator.Get<Wallet>().SetCurrentBalance(levelConfig.startBalance);
+    }
 
-    private void OnGameDefeat(){
-        GameEvents.gameRestart.Invoke();
+    private void OnGameDefeat()
+    {
+        
+    }
+    private void OnGameRestart()
+    {
+        ResetWallet();
+    }
+
+    private void OnEnemyDie(Enemy enemy){
+        _sceneLocator.Get<Wallet>().AddToWallet(enemy.enemyConf.awardForKill);
     }
 
 }
