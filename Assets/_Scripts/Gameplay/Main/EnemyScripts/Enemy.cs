@@ -57,7 +57,7 @@ public class Enemy : MonoBehaviour, IDamagable
         if (!_canDie || _currentEnemyConf.health != 0) return;
 
         GameEvents.enemyDeathEvent.Invoke(this);
-        _stateHolder.ChangeState<EnemyStateDeactive>();
+        Deactivate();
     }
 
     public void Deactivate(){

@@ -24,7 +24,6 @@ public class StatusBar : MonoBehaviour, IUpdatable
             _gameController = ServiceManager.Instance.GlobalServices.Get<GameController>();
             _cameraTransform = ServiceManager.Instance.SceneLocator.Get<CameraScript>().transform;
         }
-    
         private void OnEnable() 
         {
             _gameController.updatablesHolder.Registration(this);
@@ -34,8 +33,6 @@ public class StatusBar : MonoBehaviour, IUpdatable
         {
             _gameController.updatablesHolder.UnRegistration(this);
         }
-    
-
     #endregion
 
     public void SetMax(int max) => _sliderBar.maxValue = max;

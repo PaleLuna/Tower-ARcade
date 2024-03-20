@@ -57,8 +57,6 @@ public class CombatZone : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        print("Hit!");
-
         if (!other.TryGetComponent(out Enemy enemy)) return;
 
         _enemies.Registration(enemy);

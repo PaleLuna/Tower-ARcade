@@ -7,6 +7,10 @@ public static class GameEvents
     
     public static readonly UnityEvent gameDefeatEvent = new();
     public static readonly UnityEvent gameRestart = new();
+
+    public static readonly UnityEvent gameSetPauseEvent = new();
+    public static readonly UnityEvent gameSetResumeEvent = new();
+
     #endregion
 
     #region [ Global level events ]
@@ -15,7 +19,14 @@ public static class GameEvents
     #endregion
 
     #region [ Global enemy events ]
+
     public static readonly UnityEvent<Enemy> enemyDeathEvent = new();
     public static readonly UnityEvent<Enemy> enemyFinishReachedEvent = new();
+
+    #endregion
+
+    #region [ Global counters events ]
+        public static readonly UnityEvent<int> walletBalanceChangedEvent = new();
+        public static readonly UnityEvent<int> baseHealthChangedEvent = new();
     #endregion
 }

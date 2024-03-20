@@ -3,7 +3,7 @@ using PaleLuna.Architecture.GameComponent;
 using Services;
 using UnityEngine;
 
-public class EnemyStateWalk : EnemyState, IFixedUpdatable
+public class EnemyStateWalk : EnemyState, IFixedUpdatable, IPausable
 {
     private PathPoint _currentPathPoint;
     private Vector3 _currentDirection;
@@ -13,9 +13,8 @@ public class EnemyStateWalk : EnemyState, IFixedUpdatable
 
     public override void StateStart()
     {
-        ServiceManager
-            .Instance.GlobalServices.Get<GameController>()
-            .updatablesHolder.Registration(this);
+        UpdateSubscribe();
+        PausebleSubscribe();   
 
         m_context._pathPointReachedEvent.AddListener(ChangeDirection);
     }
@@ -43,9 +42,50 @@ public class EnemyStateWalk : EnemyState, IFixedUpdatable
 
     public override void StateStop()
     {
+        UpdateUnsubscribe();
+        PausebleUnsubscribe();
+        m_context._pathPointReachedEvent.RemoveListener(ChangeDirection);
+    }
+
+    public void OnPause()
+    {
+        UpdateUnsubscribe();
+
+        m_context.rb.velocity = Vector3.zero;
+    }
+
+    public void OnResume()
+    {
+        UpdateSubscribe();
+    }
+
+    #region  [ Subscribe methods ]
+
+    private void PausebleSubscribe()
+    {
+        ServiceManager
+            .Instance.GlobalServices.Get<GameController>()
+            .pausablesHolder.Registration(this);
+    }
+    private void PausebleUnsubscribe()
+    {
+        ServiceManager
+            .Instance.GlobalServices.Get<GameController>()
+            .pausablesHolder.Unregistration(this);
+    }
+
+
+    private void UpdateSubscribe() 
+    {
+        ServiceManager
+            .Instance.GlobalServices.Get<GameController>()
+            .updatablesHolder.Registration(this);
+    }
+    private void UpdateUnsubscribe()
+    {
         ServiceManager
             .Instance.GlobalServices.Get<GameController>()
             .updatablesHolder.UnRegistration(this);
-        m_context._pathPointReachedEvent.RemoveListener(ChangeDirection);
     }
+    #endregion
 }

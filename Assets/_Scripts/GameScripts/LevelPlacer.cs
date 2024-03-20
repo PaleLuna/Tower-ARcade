@@ -1,20 +1,14 @@
 using PaleLuna.Architecture.GameComponent;
 using Services;
-using UnityEditor;
 using UnityEngine;
 
 public class LevelPlacer : MonoBehaviour, IStartable
 {
-    
-
-    [SerializeField]
-    private GameObject _levelPrefab;
     private GameObject _levelObj;
 
     private CameraScript _camera;
     
     private bool _isStart = false;
-
     public bool IsStarted => _isStart;
 
     public void OnStart()
@@ -23,23 +17,27 @@ public class LevelPlacer : MonoBehaviour, IStartable
 
         _camera = ServiceManager.Instance.SceneLocator.Get<CameraScript>();
 
+        CreateLevel();
+
         _isStart = true;
     }
-    
     public void PlaceLevel(Vector3 point)
     {
-        if (_levelObj == null)
-            CreateLevel(point);
+        if (!_levelObj.activeSelf) EnableLevel();
+            
 
         _levelObj.transform.position = point;
         RotateToCam();
 
     }
-    private void CreateLevel(Vector3 spawnPoint)
+    private void CreateLevel()
     {
-        _levelObj = Instantiate(_levelPrefab);
-        _levelPrefab = null;
-
+        _levelObj = Instantiate(ServiceManager.Instance.SceneLocator.Get<Game>().levelConfig.levelPrefab.gameObject);
+        _levelObj.SetActive(false);
+    }
+    private void EnableLevel()
+    {
+        _levelObj.SetActive(true);
         GameEvents.levelPlaceFirstly.Invoke();
     }
 
@@ -52,7 +50,8 @@ public class LevelPlacer : MonoBehaviour, IStartable
     }
 
     [ContextMenu("Test")]
-    private void Test(){
-        GameEvents.levelPlaceFirstly.Invoke();
+    private void Test()
+    {
+        PlaceLevel(Vector3.zero);
     }
 }

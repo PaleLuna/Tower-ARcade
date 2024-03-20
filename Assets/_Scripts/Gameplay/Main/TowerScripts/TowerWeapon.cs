@@ -1,19 +1,31 @@
 using System.Collections;
+using PaleLuna.Architecture.Controllers;
+using PaleLuna.Architecture.GameComponent;
+using Services;
 using UnityEngine;
 
-public abstract class TowerWeapon
+public abstract class TowerWeapon : IUpdatable, IPausable
 {
     protected readonly AmmunitionHolder m_context;
+
+    private float _timeToShot;
+
     protected TowerConf m_towerConf;
 
-    private bool _readyToFire = true;
+    protected bool m_readyToFire = true;
 
-    protected bool m_readyToFire => _readyToFire;
+    private float _currentTime = 0;
+
 
     public TowerWeapon(AmmunitionHolder context, TowerConf towerConf)
     {
         m_context = context;
         m_towerConf = towerConf;
+
+        _timeToShot = 60 / m_towerConf.shotsPerMinute;
+
+        UpdateRegistration();
+        PausableRegistration();
     }
 
     public abstract void Fire(Enemy target, Vector3 muzzelPos);
@@ -25,24 +37,43 @@ public abstract class TowerWeapon
         Vector3 displacement = targetTransform.position - m_context.transform.TransformDirection(muzzelPos);
         float distance = displacement.magnitude;
 
-        // Время полета снаряда до цели
         float timeToTarget = distance / m_towerConf.initialSpeed;
 
-        // Будущее положение цели
         Vector3 futurePosition = targetTransform.position + target.rb.velocity * timeToTarget;
 
-        // Направление к будущему положению цели
         Vector3 direction = futurePosition - m_context.transform.TransformDirection(muzzelPos);
 
         return direction.normalized;
     }
 
-    protected IEnumerator CoolDown()
+    public void EveryFrameRun()
     {
-        _readyToFire = false;
+        if(m_readyToFire) return;
 
-        yield return new WaitForSeconds(60F / m_towerConf.shotsPerMinute);
+        _currentTime += Time.deltaTime;
 
-        _readyToFire = true;
+        if(_currentTime >= _timeToShot)
+        {
+            m_readyToFire = true;
+            _currentTime = 0;
+        }
     }
+
+    public void OnPause()
+    {
+        UpdateUnregistation();
+    }
+
+    public void OnResume()
+    {
+        UpdateRegistration();
+    }
+
+    private void PausableRegistration() =>
+        ServiceManager.Instance.GlobalServices.Get<GameController>().pausablesHolder.Registration(this);
+
+    private void UpdateRegistration() =>
+        ServiceManager.Instance.GlobalServices.Get<GameController>().updatablesHolder.Registration(this);
+    private void UpdateUnregistation() =>
+        ServiceManager.Instance.GlobalServices.Get<GameController>().updatablesHolder.UnRegistration(this);
 }

@@ -56,7 +56,6 @@ public class RayScanner : MonoBehaviour
 
     private void RayCastOnTouch(Vector2 startPos)
     {
-        print("Tap!");
         if (IsUI(startPos)) _rayCastEvents.OnUIDetect();
         else if (IsGameObject(startPos, out GameObject gObj)) _rayCastEvents.OnGODetect(gObj);
         else if (IsPlane(startPos, out Vector3 point)) _rayCastEvents.OnPlaneDetect(point);
@@ -66,8 +65,6 @@ public class RayScanner : MonoBehaviour
     private bool IsPlane(Vector2 startPos, out Vector3 point)
     {
         bool flag = TryGetPlaneTouch(startPos, out point);
-
-        print($"is Plane: {flag}");
 
         return flag;
     }
@@ -83,7 +80,6 @@ public class RayScanner : MonoBehaviour
             gObj = hit.collider.gameObject;
         bool flag = isGObj && !gObj.GetComponent<CanvasRenderer>() && !gObj.GetComponent<ARPlane>();
 
-        print($"is GO: {flag}; {gObj}");
         return flag;
     }
 
@@ -97,7 +93,6 @@ public class RayScanner : MonoBehaviour
 
         bool flag = results.Count > 0;
 
-        print($"is UI: {flag}");
         return flag;
     }
 
