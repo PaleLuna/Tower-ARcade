@@ -15,5 +15,5 @@ MonoBehaviour:
   _levelPrefab: {fileID: 2747376705103626201, guid: ec98165da8aacab4099345703050e889,
     type: 3}
   _levelStartChar:
-    maxBaseHealthPoint: 2
+    maxBaseHealthPoint: 3
     startBalance: 100
