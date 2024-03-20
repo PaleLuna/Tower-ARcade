@@ -15,5 +15,7 @@ MonoBehaviour:
   _mainCharacteristics:
     speed: 0.1
     health: 2
-  _penaltyForPassing: 1
-  _awardForKill: 20
+  _penaltiesAndAwards:
+    penaltyForPassing: 1
+    awardForKill: 20
+    awardScore: 100

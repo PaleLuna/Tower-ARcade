@@ -9,10 +9,10 @@ public class EnemyConf : ScriptableObject
     private EnemyMainCharacterisctis _mainCharacteristics;
 
     [Header("Penalties and awards")]
-    [SerializeField, Min(1)]
-    private int _penaltyForPassing = 1;
-    [SerializeField, Min(1)]
-    private int _awardForKill;
+    [SerializeField]
+    private EnemyPenaltiesAndAwards _penaltiesAndAwards;
+    
+    
 
 
     #region [ Properties ]
@@ -28,15 +28,15 @@ public class EnemyConf : ScriptableObject
             }
         #endregion
 
-        public int penaltyForPassing => _penaltyForPassing;
-        public int awardForKill => _awardForKill;
+        public int penaltyForPassing => _penaltiesAndAwards.penaltyForPassing;
+        public int awardForKill => _penaltiesAndAwards.awardForKill;
+        public int awardScore => _penaltiesAndAwards.awardScore;
     #endregion
 
     public void Copy(EnemyConf other)
     {
         _mainCharacteristics.Copy(other._mainCharacteristics);
-        _penaltyForPassing = other._penaltyForPassing;
-        _awardForKill = other._awardForKill;
+        _penaltiesAndAwards.Copy(other._penaltiesAndAwards);
     }
 }
 
@@ -54,5 +54,22 @@ public struct EnemyMainCharacterisctis
     {
         speed = other.speed;
         health = other.health;
+    }
+}
+[Serializable]
+public struct EnemyPenaltiesAndAwards
+{
+    [Min(1)]
+    public int penaltyForPassing;
+    [Min(1)]
+    public int awardForKill;
+    [Min(1)]
+    public int awardScore;
+
+    public void Copy(EnemyPenaltiesAndAwards other)
+    {
+        penaltyForPassing = other.penaltyForPassing;
+        awardForKill = other.awardForKill;
+        awardScore = other.awardScore;
     }
 }
