@@ -16,4 +16,4 @@ MonoBehaviour:
     type: 3}
   _levelStartChar:
     maxBaseHealthPoint: 2
-    startBalance: 0
+    startBalance: 100
